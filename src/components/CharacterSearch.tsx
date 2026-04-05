@@ -205,7 +205,7 @@ export default function CharacterSearch() {
           {/* 상단 프로필 배너 영역 */}
           <div className="relative p-6 sm:p-8 min-h-[420px] flex flex-col overflow-hidden bg-[#161719]">
             {/* 캐릭터 이미지 (우측 배치) */}
-            <div className="absolute right-0 sm:right-10 bottom-0 h-[80%] sm:h-full w-[300px] sm:w-[450px] pointer-events-none opacity-90 sm:opacity-100 flex items-end justify-end z-0">
+            <div className="absolute right-[-20px] sm:right-10 bottom-0 h-[85%] sm:h-full w-[280px] sm:w-[450px] pointer-events-none opacity-80 sm:opacity-100 flex items-end justify-end z-0">
               {tabData['profiles'].CharacterImage && (
                 <img 
                   src={tabData['profiles'].CharacterImage} 
