@@ -205,12 +205,12 @@ export default function CharacterSearch() {
           {/* 상단 프로필 배너 영역 */}
           <div className="relative p-6 sm:p-8 min-h-[420px] flex flex-col overflow-hidden bg-[#161719]">
             {/* 캐릭터 이미지 (우측 배치) */}
-            <div className="absolute right-0 sm:right-10 bottom-0 h-full w-[350px] sm:w-[450px] pointer-events-none opacity-90 sm:opacity-100 flex items-end justify-end">
+            <div className="absolute right-0 sm:right-10 bottom-0 h-[80%] sm:h-full w-[300px] sm:w-[450px] pointer-events-none opacity-90 sm:opacity-100 flex items-end justify-end z-0">
               {tabData['profiles'].CharacterImage && (
                 <img 
                   src={tabData['profiles'].CharacterImage} 
                   alt={tabData['profiles'].CharacterName}
-                  className="w-full h-[110%] object-cover object-top origin-bottom transform translate-y-[5%]"
+                  className="w-full h-full sm:h-[110%] object-cover object-top origin-bottom sm:transform sm:translate-y-[5%]"
                   style={{ maskImage: 'linear-gradient(to right, transparent, black 20%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%)' }}
                 />
               )}
@@ -243,7 +243,7 @@ export default function CharacterSearch() {
             </div>
 
             {/* 좌측: 캐릭터 기본 정보 */}
-            <div className="relative z-10 flex flex-col flex-1 justify-center max-w-[70%] sm:max-w-[60%] mt-2">
+            <div className="relative z-10 flex flex-col flex-1 justify-center max-w-[80%] sm:max-w-[60%] mt-2">
               
               {/* 서버 및 직업 뱃지 */}
               <div className="flex gap-2 text-[13px] font-bold mb-3">
