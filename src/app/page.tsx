@@ -2,8 +2,8 @@ import CharacterSearch from "@/components/CharacterSearch";
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-8 md:p-24 flex flex-col items-center selection:bg-gold selection:text-black">
-      <div className="w-full max-w-2xl mb-12 text-center mt-10 md:mt-20">
+    <main className="min-h-screen px-0 py-8 md:p-24 flex flex-col items-center selection:bg-gold selection:text-black">
+      <div className="w-full max-w-2xl mb-12 text-center mt-10 md:mt-20 px-4 md:px-0">
         <div className="inline-block px-3 py-1 mb-4 rounded-full border border-gold/30 bg-gold/10 text-gold text-sm font-medium">
           Lost Ark Open API
         </div>

@@ -123,7 +123,7 @@ export default function CharacterSearch() {
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col gap-6">
       {/* 검색 폼 */}
-      <div className="flex justify-center mb-4" ref={searchContainerRef}>
+      <div className="flex justify-center mb-4 px-4 sm:px-0" ref={searchContainerRef}>
         <form onSubmit={handleSearch} className="flex gap-3 relative w-full max-w-md">
           <div className="w-full relative">
             <input
@@ -200,17 +200,17 @@ export default function CharacterSearch() {
 
       {/* 탭 & 결과 영역 (첫 번째 검색 성공 시에만 렌더링) */}
       {Object.keys(tabData).length > 0 && tabData['profiles'] && (
-        <div className="bg-[#111111] rounded-xl overflow-hidden border border-[#2a2d36] shadow-2xl">
+        <div className="bg-[#111111] sm:rounded-xl overflow-hidden sm:border border-[#2a2d36] border-x-0 border-y sm:border-x shadow-2xl">
           
           {/* 상단 프로필 배너 영역 */}
           <div className="relative p-6 sm:p-8 min-h-[420px] flex flex-col overflow-hidden bg-[#161719]">
             {/* 캐릭터 이미지 (우측 배치) */}
-            <div className="absolute right-[-20px] sm:right-10 bottom-0 h-[85%] sm:h-full w-[280px] sm:w-[450px] pointer-events-none opacity-80 sm:opacity-100 flex items-end justify-end z-0">
+            <div className="absolute right-[-140px] sm:right-10 bottom-[-150px] sm:bottom-0 h-[150%] sm:h-full w-[500px] sm:w-[450px] pointer-events-none opacity-80 sm:opacity-100 flex items-end justify-end z-0">
               {tabData['profiles'].CharacterImage && (
                 <img 
                   src={tabData['profiles'].CharacterImage} 
                   alt={tabData['profiles'].CharacterName}
-                  className="w-full h-full sm:h-[110%] object-cover object-top origin-bottom sm:transform sm:translate-y-[5%]"
+                  className="w-full h-[120%] sm:h-[110%] object-cover object-top origin-bottom transform translate-y-[30%] sm:translate-y-[5%]"
                   style={{ maskImage: 'linear-gradient(to right, transparent, black 20%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%)' }}
                 />
               )}
@@ -252,42 +252,42 @@ export default function CharacterSearch() {
               </div>
               
               {/* 캐릭터 명 & 칭호 */}
-              <h1 className="text-3xl sm:text-[40px] font-extrabold text-white tracking-tight mb-2">
+              <h1 className="text-3xl sm:text-[40px] font-extrabold text-white tracking-tight mb-0">
                 {tabData['profiles'].CharacterName}
               </h1>
-              <div className="text-gray-400 text-[15px] mb-8 font-medium">
+              <div className="text-gray-400 text-[14px] sm:text-[15px] mb-4 font-medium">
                 {tabData['profiles'].Title || '칭호 없음'}
               </div>
               
               {/* 길드 및 영지 */}
-              <div className="flex flex-col gap-2 text-[14px] mb-12">
-                <div className="flex items-center gap-4">
+              <div className="flex flex-col gap-0 text-[13px] sm:text-[14px] mb-10">
+                <div className="flex items-center gap-3">
                   <span className="text-gray-400 w-8">길드</span>
                   <span className="text-white font-bold">{tabData['profiles'].GuildName || '-'}</span>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <span className="text-gray-400 w-8">영지</span>
                   <span className="text-white font-bold">{tabData['profiles'].TownName || '-'} <span className="text-gray-300 font-normal ml-1">Lv.{tabData['profiles'].TownLevel || 0}</span></span>
                 </div>
               </div>
               
               {/* 하단 능력치 요약 */}
-              <div className="flex flex-wrap gap-6 sm:gap-10 mt-auto">
-                <div className="flex flex-col gap-1">
-                  <div className="text-[13px] text-gray-400 font-medium">아이템</div>
-                  <div className="text-2xl sm:text-[28px] font-extrabold text-white tracking-tight">{tabData['profiles'].ItemAvgLevel}</div>
+              <div className="flex justify-start gap-4 sm:gap-10 mt-auto w-full relative z-20">
+                <div className="flex flex-col gap-0.5 sm:gap-1">
+                  <div className="text-[11px] sm:text-[13px] text-gray-400 font-medium">아이템</div>
+                  <div className="text-[16px] sm:text-[28px] font-extrabold text-white tracking-tight">{tabData['profiles'].ItemAvgLevel}</div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <div className="text-[13px] text-gray-400 font-medium">전투력</div>
-                  <div className="text-2xl sm:text-[28px] font-extrabold text-[#ff6a6a] tracking-tight">{tabData['profiles'].CombatPower || '-'}</div>
+                <div className="flex flex-col gap-0.5 sm:gap-1">
+                  <div className="text-[11px] sm:text-[13px] text-gray-400 font-medium">전투력</div>
+                  <div className="text-[16px] sm:text-[28px] font-extrabold text-[#ff6a6a] tracking-tight">{tabData['profiles'].CombatPower || '-'}</div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <div className="text-[13px] text-gray-400 font-medium">전투</div>
-                  <div className="text-xl sm:text-2xl font-bold text-white mt-auto">Lv.{tabData['profiles'].CharacterLevel}</div>
+                <div className="flex flex-col gap-0.5 sm:gap-1">
+                  <div className="text-[11px] sm:text-[13px] text-gray-400 font-medium">전투</div>
+                  <div className="text-[15px] sm:text-2xl font-bold text-white mt-auto">Lv.{tabData['profiles'].CharacterLevel}</div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <div className="text-[13px] text-gray-400 font-medium">원정대</div>
-                  <div className="text-xl sm:text-2xl font-bold text-white mt-auto">Lv.{tabData['profiles'].ExpeditionLevel}</div>
+                <div className="flex flex-col gap-0.5 sm:gap-1">
+                  <div className="text-[11px] sm:text-[13px] text-gray-400 font-medium">원정대</div>
+                  <div className="text-[15px] sm:text-2xl font-bold text-white mt-auto">Lv.{tabData['profiles'].ExpeditionLevel}</div>
                 </div>
               </div>
               
