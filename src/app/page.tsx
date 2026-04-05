@@ -8,7 +8,9 @@ export default function Home() {
           Lost Ark Open API
         </div>
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-          로스트아크 <span className="text-gold drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">정보 검색</span>
+          망고네&nbsp;
+          <span className="text-[#58C7F3] drop-shadow-[0_0_10px_rgba(88,199,243,0.25)]">로스트아크</span>&nbsp;
+          <span className="text-[#FFD700] drop-shadow-[0_0_15px_rgba(255,215,0,0.4)] ml-1">정보 검색</span>
         </h1>
         <p className="text-gray-400 text-lg">
           캐릭터의 클래스, 레벨, 장비 정보를 확인하세요

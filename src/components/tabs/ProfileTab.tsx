@@ -22,6 +22,7 @@ export default function ProfileTab({
     let stoneEngravings: { name: string, level: string, isPenalty: boolean }[] = [];
     let accOptions: { text: string, color: string }[] = [];
     let braceletOptions: string[] = [];
+    let orbEffect = '';
 
     try {
       const tooltip = JSON.parse(eq.Tooltip);
@@ -79,6 +80,11 @@ export default function ProfileTab({
              if (text) braceletOptions.push(text);
           });
         }
+
+        if (tooltip[key].type === 'ItemPartBox' && tooltip[key].value?.Element_000?.includes('특수 효과')) {
+          // 보주 특수 효과 텍스트 추출 (HTML 태그 제거)
+          orbEffect = tooltip[key].value.Element_001.replace(/<br>/gi, ' ').replace(/<BR>/gi, ' ').replace(/<[^>]*>/g, '').trim();
+        }
       }
     } catch(e) {}
 
@@ -90,7 +96,7 @@ export default function ProfileTab({
       cleanName = cleanName.replace(/^\+(\d+)\s+/, '');
     }
 
-    return { ...eq, cleanName, quality, itemLevel, tier, refine, advRefine, stoneEngravings, accOptions, braceletOptions };
+    return { ...eq, cleanName, quality, itemLevel, tier, refine, advRefine, stoneEngravings, accOptions, braceletOptions, orbEffect };
   }) || [];
 
   const leftEqTypes = ['투구', '어깨', '상의', '하의', '장갑', '무기'];
@@ -101,6 +107,7 @@ export default function ProfileTab({
   rightEqs.sort((a: any, b: any) => rightEqTypes.indexOf(a.Type) - rightEqTypes.indexOf(b.Type));
 
   const bracelet = parsedEquipment.find((eq: any) => eq.Type === '팔찌');
+  const orb = parsedEquipment.find((eq: any) => eq.Type === '보주');
   const specialEquips = parsedEquipment.filter((eq: any) => ['나침반', '부적', '보주'].includes(eq.Type));
 
   const renderEquipItem = (eq: any, idx: number) => {
@@ -217,7 +224,7 @@ export default function ProfileTab({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <div className="lg:col-span-6 flex flex-col gap-4">
-        <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden h-full">
+        <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden">
           <div className="px-4 py-3 border-b border-[#2a2d36] flex justify-between items-center">
             <span className="font-bold text-sm text-gray-200">장비</span>
           </div>
@@ -234,171 +241,18 @@ export default function ProfileTab({
                     {rightEqs.map((eq: any, idx: number) => renderEquipItem(eq, idx))}
                   </div>
                 </div>
-                {(bracelet || specialEquips.length > 0) && (
+                {bracelet && (
                   <div className="flex flex-col gap-3 border-t border-[#2a2d36] pt-4">
-                    {bracelet && renderEquipItem(bracelet, 100)}
-                    {specialEquips.map((eq: any, idx: number) => renderEquipItem(eq, 200 + idx))}
+                    {renderEquipItem(bracelet, 100)}
                   </div>
                 )}
               </div>
             )}
           </div>
         </div>
-      </div>
 
-      <div className="lg:col-span-6 flex flex-col gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden">
-            <div className="px-4 py-3 border-b border-[#2a2d36] flex justify-between items-center">
-              <span className="font-bold text-sm text-gray-200">특성</span>
-              <span className="text-xs text-gray-500 hover:text-[#d4af37] cursor-pointer">❯</span>
-            </div>
-            <div className="p-4">
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-[#ff5e5e] rounded-sm"></div>
-                  <span className="text-gray-400 text-sm">치명</span>
-                </div>
-                <span className="text-white font-bold">{getStat('치명')}</span>
-              </div>
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-[#d4af37] rounded-sm"></div>
-                  <span className="text-gray-400 text-sm">특화</span>
-                </div>
-                <span className="text-white font-bold">{getStat('특화')}</span>
-              </div>
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-[#4cc3ff] rounded-sm"></div>
-                  <span className="text-gray-400 text-sm">신속</span>
-                </div>
-                <span className="text-white font-bold">{getStat('신속')}</span>
-              </div>
-              <div className="text-xs text-gray-400 border-t border-[#2a2d36] pt-3 flex justify-between mt-2">
-                <span>최대 생명력</span>
-                <span className="text-white">{getStat('최대 생명력')}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden flex flex-col">
-            <div className="px-4 py-3 border-b border-[#2a2d36] flex justify-between items-center">
-              <span className="font-bold text-sm text-gray-200">각인</span>
-            </div>
-            <div className="p-0">
-              {!engravings ? (
-                <div className="text-center text-sm text-gray-500 py-8">로딩 중...</div>
-              ) : (
-                <div className="flex flex-col">
-                  {/* 서브 헤더 */}
-                  {engravings.ArkPassiveEffects && (
-                    <div className="px-4 py-2 border-b border-[#222] flex justify-between items-center bg-[#111]">
-                      <span className="text-xs text-gray-400"></span>
-                      <span className="text-xs text-[#aadd66]">아크 패시브 활성화</span>
-                    </div>
-                  )}
-                  {/* 각인 리스트 */}
-                  <div className="flex flex-col bg-[#111]">
-                    {(engravings.ArkPassiveEffects || engravings.Effects || []).map((eng: any, idx: number) => {
-                      const iconSrc = eng.Icon || getFallbackIcon(eng.Name); 
-                      const stoneLevel = eng.AbilityStoneLevel || 0;
-                      const engLevel = eng.Level || 0;
-                      
-                      return (
-                        <div key={idx} className="flex justify-between items-center px-4 py-2.5 border-b border-[#222] last:border-0 hover:bg-[#1a1c23] transition-colors">
-                          <div className="flex items-center gap-3">
-                            <img src={iconSrc} className="w-8 h-8 rounded border border-[#333]" alt={eng.Name} />
-                            <span className="text-sm font-bold text-gray-200">{eng.Name}</span>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1">
-                              <span className="text-[#ff5e5e] text-[10px]">♦</span>
-                              <span className="text-gray-300 text-sm">× {stoneLevel}</span>
-                            </div>
-                            {engLevel > 0 && (
-                              <div className="flex items-center gap-1 w-12 justify-end">
-                                <span className="text-[#4cc3ff] text-[10px]">♦</span>
-                                <span className="text-gray-300 text-sm">Lv.{engLevel}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* 3. 아크 패시브 종합 블록 */}
-          {arkpassive && (
-            <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden flex flex-col">
-              {/* 포인트 헤더 */}
-              <div className="px-4 py-3 flex justify-between items-center border-b border-[#2a2d36]">
-                <span className="font-bold text-sm text-gray-200">아크 패시브 포인트</span>
-                <span className="text-xs text-gray-500 hover:text-[#d4af37] cursor-pointer" onClick={() => onTabChange('arkpassive')}>❯</span>
-              </div>
-              <div className="px-4 py-3 bg-[#111]">
-                <div className="flex justify-start gap-4">
-                  {arkpassive.Points?.map((p: any, idx: number) => {
-                    const color = p.Name === '진화' ? 'text-[#e5c171]' : p.Name === '깨달음' ? 'text-[#87bdf5]' : 'text-[#aadd66]';
-                    const borderColor = p.Name === '진화' ? 'border-[#e5c171]/50' : p.Name === '깨달음' ? 'border-[#87bdf5]/50' : 'border-[#aadd66]/50';
-                    return (
-                      <div key={idx} className="flex items-center gap-2">
-                        <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded border ${borderColor} text-gray-300 bg-[#222]`}>{p.Name}</span>
-                        <span className={`text-sm font-bold ${color}`}>{p.Value}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              
-              {/* 효과 섹션 */}
-              <div className="px-4 py-3 border-y border-[#2a2d36] bg-[#181a20]">
-                <span className="font-bold text-sm text-gray-200">아크 패시브 효과</span>
-              </div>
-              <div className="flex flex-col bg-[#111]">
-                {['진화', '깨달음', '도약'].map((type) => {
-                  const effects = arkpassive.Effects?.filter((e: any) => e.Name === type) || [];
-                  if (effects.length === 0) return null;
-                  
-                  const titleColor = type === '진화' ? 'text-[#e5c171]' : type === '깨달음' ? 'text-[#4cc3ff]' : 'text-[#aadd66]';
-
-                  return (
-                    <div key={type} className="flex flex-col border-b border-[#222] last:border-0">
-                      <div className="px-4 py-3">
-                        <span className={`text-sm font-bold ${titleColor}`}>{type}</span>
-                      </div>
-                      <div className="grid grid-cols-2">
-                        {effects.map((eff: any, idx: number) => {
-                          const tierMatch = eff.Description.match(/(\d+)티어/);
-                          const lvMatch = eff.Description.match(/Lv\.(\d+)/);
-                          const tier = tierMatch ? `T${tierMatch[1]}` : 'T?';
-                          const lv = lvMatch ? `Lv.${lvMatch[1]}` : 'Lv.?';
-
-                          return (
-                            <div key={idx} className="flex items-center gap-3 px-4 py-2 border-t border-[#222] even:border-l">
-                              <img src={eff.Icon} alt={eff.Name} className="w-8 h-8 rounded border border-[#333]" />
-                              <div className="flex items-center gap-2">
-                                <span className="bg-[#2a2d36] text-gray-300 text-[10px] font-bold px-1.5 py-0.5 rounded border border-[#444]">{tier}</span>
-                                <span className="text-gray-200 text-sm font-bold">{lv}</span>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-        </div>
-
-        <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden">
+        {/* 보석 정보 (좌측 하단으로 이동) */}
+        <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden flex-1">
           <div className="px-4 py-3 border-b border-[#2a2d36] flex justify-between items-center">
             <span className="font-bold text-sm text-gray-200">보석</span>
           </div>
@@ -494,7 +348,193 @@ export default function ProfileTab({
             )}
           </div>
         </div>
+      </div>
 
+      <div className="lg:col-span-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          
+          {/* 좌측 열: 특성 + 아크패시브 */}
+          <div className="flex flex-col gap-4">
+            <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden">
+              <div className="px-4 py-3 border-b border-[#2a2d36] flex justify-between items-center">
+                <span className="font-bold text-sm text-gray-200">특성</span>
+                <span className="text-xs text-gray-500 hover:text-[#d4af37] cursor-pointer">❯</span>
+              </div>
+              <div className="p-4">
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[#ff5e5e] rounded-sm"></div>
+                    <span className="text-gray-400 text-sm">치명</span>
+                  </div>
+                  <span className="text-white font-bold">{getStat('치명')}</span>
+                </div>
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[#d4af37] rounded-sm"></div>
+                    <span className="text-gray-400 text-sm">특화</span>
+                  </div>
+                  <span className="text-white font-bold">{getStat('특화')}</span>
+                </div>
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[#4cc3ff] rounded-sm"></div>
+                    <span className="text-gray-400 text-sm">신속</span>
+                  </div>
+                  <span className="text-white font-bold">{getStat('신속')}</span>
+                </div>
+                <div className="text-xs text-gray-400 border-t border-[#2a2d36] pt-3 flex justify-between mt-2">
+                  <span>최대 생명력</span>
+                  <span className="text-white">{getStat('최대 생명력')}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. 아크 패시브 종합 블록 */}
+            {arkpassive && (
+              <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden flex flex-col">
+                {/* 포인트 헤더 */}
+                <div className="px-4 py-3 flex justify-between items-center border-b border-[#2a2d36]">
+                  <span className="font-bold text-sm text-gray-200">아크 패시브 포인트</span>
+                  <span className="text-xs text-gray-500 hover:text-[#d4af37] cursor-pointer" onClick={() => onTabChange('arkpassive')}>❯</span>
+                </div>
+                <div className="px-4 py-3 bg-[#111]">
+                  <div className="flex justify-start gap-4">
+                    {arkpassive.Points?.map((p: any, idx: number) => {
+                      const color = p.Name === '진화' ? 'text-[#e5c171]' : p.Name === '깨달음' ? 'text-[#87bdf5]' : 'text-[#aadd66]';
+                      const borderColor = p.Name === '진화' ? 'border-[#e5c171]/50' : p.Name === '깨달음' ? 'border-[#87bdf5]/50' : 'border-[#aadd66]/50';
+                      return (
+                        <div key={idx} className="flex items-center gap-2">
+                          <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded border ${borderColor} text-gray-300 bg-[#222]`}>{p.Name}</span>
+                          <span className={`text-sm font-bold ${color}`}>{p.Value}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                
+                {/* 효과 섹션 */}
+                <div className="px-4 py-3 border-y border-[#2a2d36] bg-[#181a20]">
+                  <span className="font-bold text-sm text-gray-200">아크 패시브 효과</span>
+                </div>
+                <div className="flex flex-col bg-[#111]">
+                  {['진화', '깨달음', '도약'].map((type) => {
+                    const effects = arkpassive.Effects?.filter((e: any) => e.Name === type) || [];
+                    if (effects.length === 0) return null;
+                    
+                    const titleColor = type === '진화' ? 'text-[#e5c171]' : type === '깨달음' ? 'text-[#4cc3ff]' : 'text-[#aadd66]';
+
+                    return (
+                      <div key={type} className="flex flex-col border-b border-[#222] last:border-0">
+                        <div className="px-4 py-3">
+                          <span className={`text-sm font-bold ${titleColor}`}>{type}</span>
+                        </div>
+                        <div className="grid grid-cols-2">
+                          {effects.map((eff: any, idx: number) => {
+                            const tierMatch = eff.Description.match(/(\d+)티어/);
+                            const lvMatch = eff.Description.match(/Lv\.(\d+)/);
+                            const tier = tierMatch ? `T${tierMatch[1]}` : 'T?';
+                            const lv = lvMatch ? `Lv.${lvMatch[1]}` : 'Lv.?';
+
+                            return (
+                              <div key={idx} className="flex items-center gap-3 px-4 py-2 border-t border-[#222] even:border-l">
+                                <img src={eff.Icon} alt={eff.Name} className="w-8 h-8 rounded border border-[#333]" />
+                                <div className="flex items-center gap-2">
+                                  <span className="bg-[#2a2d36] text-gray-300 text-[10px] font-bold px-1.5 py-0.5 rounded border border-[#444]">{tier}</span>
+                                  <span className="text-gray-200 text-sm font-bold">{lv}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 우측 열: 각인 + 보주 */}
+          <div className="flex flex-col gap-4">
+            <div className="bg-[#181a20] rounded-xl border border-[#2a2d36] overflow-hidden flex flex-col">
+              <div className="px-4 py-3 border-b border-[#2a2d36] flex justify-between items-center">
+                <span className="font-bold text-sm text-gray-200">각인</span>
+              </div>
+              <div className="p-0">
+                {!engravings ? (
+                  <div className="text-center text-sm text-gray-500 py-8">로딩 중...</div>
+                ) : (
+                  <div className="flex flex-col">
+                    {/* 서브 헤더 */}
+                    {engravings.ArkPassiveEffects && (
+                      <div className="px-4 py-2 border-b border-[#222] flex justify-between items-center bg-[#111]">
+                        <span className="text-xs text-gray-400"></span>
+                        <span className="text-xs text-[#aadd66]">아크 패시브 활성화</span>
+                      </div>
+                    )}
+                    {/* 각인 리스트 */}
+                    <div className="flex flex-col bg-[#111]">
+                      {(engravings.ArkPassiveEffects || engravings.Effects || []).map((eng: any, idx: number) => {
+                        const iconSrc = eng.Icon || getFallbackIcon(eng.Name); 
+                        const stoneLevel = eng.AbilityStoneLevel || 0;
+                        const engLevel = eng.Level || 0;
+                        
+                        return (
+                          <div key={idx} className="flex justify-between items-center px-4 py-2.5 border-b border-[#222] last:border-0 hover:bg-[#1a1c23] transition-colors">
+                            <div className="flex items-center gap-3">
+                              <img src={iconSrc} className="w-8 h-8 rounded border border-[#333]" alt={eng.Name} />
+                              <span className="text-sm font-bold text-gray-200">{eng.Name}</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-1">
+                                <span className="text-[#ff5e5e] text-[10px]">♦</span>
+                                <span className="text-gray-300 text-sm">× {stoneLevel}</span>
+                              </div>
+                              {engLevel > 0 && (
+                                <div className="flex items-center gap-1 w-12 justify-end">
+                                  <span className="text-[#4cc3ff] text-[10px]">♦</span>
+                                  <span className="text-gray-300 text-sm">Lv.{engLevel}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {/* 보주 블록 (각인 바로 아래 배치) */}
+              {orb && (
+                <>
+                  <div className="px-4 py-3 border-y border-[#2a2d36] flex justify-between items-center bg-[#181a20]">
+                    <span className="font-bold text-sm text-gray-200">보주</span>
+                  </div>
+                  <div className="flex items-start gap-3 bg-[#111] p-4">
+                    <div className={`relative w-[46px] h-[46px] rounded border border-[#333] shrink-0 bg-gradient-to-br ${
+                      orb.Grade === '에스더' ? 'from-[#0c2e2c] to-[#26a89c]' :
+                      orb.Grade === '고대' ? 'from-[#3d3325] to-[#dcc999]' :
+                      orb.Grade === '유물' ? 'from-[#3a1b14] to-[#c96226]' : 
+                      orb.Grade === '전설' ? 'from-[#362a0c] to-[#c89d20]' : 'from-[#222] to-[#444]'
+                    }`}>
+                      <img src={orb.Icon} alt={orb.cleanName} className="w-full h-full object-cover rounded" />
+                    </div>
+                    <div className="flex-1 min-w-0 flex flex-col justify-center gap-1">
+                      <div className="text-[13px] font-bold text-white">{orb.cleanName}</div>
+                      {orb.orbEffect && (
+                        <div className="text-[11px] text-gray-400 leading-relaxed mt-0.5">
+                          {orb.orbEffect}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );

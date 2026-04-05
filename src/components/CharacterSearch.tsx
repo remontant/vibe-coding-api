@@ -203,62 +203,94 @@ export default function CharacterSearch() {
         <div className="bg-[#111111] rounded-xl overflow-hidden border border-[#2a2d36] shadow-2xl">
           
           {/* 상단 프로필 배너 영역 */}
-          <div className="relative p-8 min-h-[320px] flex flex-col justify-between overflow-hidden bg-gradient-to-b from-[#1a1c23] to-[#0f1115]">
-            {/* 캐릭터 이미지 (중앙 배치) */}
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 h-full w-[400px] pointer-events-none opacity-90">
+          <div className="relative p-6 sm:p-8 min-h-[420px] flex flex-col overflow-hidden bg-[#161719]">
+            {/* 캐릭터 이미지 (우측 배치) */}
+            <div className="absolute right-0 sm:right-10 bottom-0 h-full w-[350px] sm:w-[450px] pointer-events-none opacity-90 sm:opacity-100 flex items-end justify-end">
               {tabData['profiles'].CharacterImage && (
                 <img 
                   src={tabData['profiles'].CharacterImage} 
                   alt={tabData['profiles'].CharacterName}
-                  className="w-full h-full object-cover object-top [mask-image:linear-gradient(to_bottom,white_60%,transparent_100%)]"
+                  className="w-full h-[110%] object-cover object-top origin-bottom transform translate-y-[5%]"
+                  style={{ maskImage: 'linear-gradient(to right, transparent, black 20%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%)' }}
                 />
               )}
             </div>
 
-            {/* 좌우 정보 래퍼 */}
-            <div className="relative z-10 flex flex-col md:flex-row justify-between h-full gap-4">
+            {/* 상단 버튼 영역 */}
+            <div className="relative z-20 flex justify-between items-center w-full mb-6">
+              {/* 뒤로가기 버튼 */}
+              <button 
+                onClick={() => setTabData({})} 
+                className="flex items-center justify-center w-8 h-8 text-white hover:text-gray-400 transition-colors"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+
+              <div className="flex gap-2">
+                <button className="flex items-center justify-center w-9 h-9 bg-transparent hover:bg-[#2a2c33] border border-[#333] rounded transition-colors text-white">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6"></path><path d="M10 14L21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+                </button>
+                <button className="flex items-center justify-center gap-1.5 px-3 h-9 bg-transparent hover:bg-[#2a2c33] border border-[#333] rounded transition-colors text-white text-[13px] font-bold">
+                  <span className="text-lg mb-0.5">☆</span> 즐겨찾기
+                </button>
+                <button 
+                  onClick={() => performSearch(characterName)} 
+                  className="flex items-center justify-center px-4 h-9 bg-[#217b46] hover:bg-[#1e6a3d] rounded transition-colors text-white text-[13px] font-bold"
+                >
+                  갱신
+                </button>
+              </div>
+            </div>
+
+            {/* 좌측: 캐릭터 기본 정보 */}
+            <div className="relative z-10 flex flex-col flex-1 justify-center max-w-[70%] sm:max-w-[60%] mt-2">
               
-              {/* 왼쪽: 기본 정보 */}
-              <div className="flex flex-col gap-2">
-                <div className="flex gap-2 text-sm font-medium">
-                  <span className="px-2 py-0.5 bg-[#222] border border-[#333] rounded text-gray-300">{tabData['profiles'].ServerName}</span>
-                  <span className="px-2 py-0.5 bg-[#222] border border-[#333] rounded text-gray-300">{tabData['profiles'].CharacterClassName}</span>
+              {/* 서버 및 직업 뱃지 */}
+              <div className="flex gap-2 text-[13px] font-bold mb-3">
+                <span className="px-2.5 py-1 bg-[#26282d] rounded text-gray-300">{tabData['profiles'].ServerName}</span>
+                <span className="px-2.5 py-1 bg-[#26282d] rounded text-gray-300">{tabData['profiles'].CharacterClassName}</span>
+              </div>
+              
+              {/* 캐릭터 명 & 칭호 */}
+              <h1 className="text-3xl sm:text-[40px] font-extrabold text-white tracking-tight mb-2">
+                {tabData['profiles'].CharacterName}
+              </h1>
+              <div className="text-gray-400 text-[15px] mb-8 font-medium">
+                {tabData['profiles'].Title || '칭호 없음'}
+              </div>
+              
+              {/* 길드 및 영지 */}
+              <div className="flex flex-col gap-2 text-[14px] mb-12">
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-400 w-8">길드</span>
+                  <span className="text-white font-bold">{tabData['profiles'].GuildName || '-'}</span>
                 </div>
-                <h1 className="text-4xl font-bold text-white tracking-tight mt-1">{tabData['profiles'].CharacterName}</h1>
-                <div className="text-[#a0a0a0] text-sm mb-6">{tabData['profiles'].Title || '칭호 없음'}</div>
-                
-                <div className="flex gap-6 mt-auto bg-black/40 p-4 rounded-lg backdrop-blur-sm border border-white/5 w-fit">
-                  <div>
-                    <div className="text-[11px] text-gray-400 mb-1">아이템</div>
-                    <div className="text-xl font-bold text-[#d4af37]">{tabData['profiles'].ItemAvgLevel}</div>
-                  </div>
-                  <div>
-                    <div className="text-[11px] text-gray-400 mb-1">전투력</div>
-                    <div className="text-xl font-bold text-[#ff6060]">{tabData['profiles'].CombatPower || '-'}</div>
-                  </div>
-                  <div>
-                    <div className="text-[11px] text-gray-400 mb-1">전투</div>
-                    <div className="text-xl font-bold text-white">Lv.{tabData['profiles'].CharacterLevel}</div>
-                  </div>
-                  <div>
-                    <div className="text-[11px] text-gray-400 mb-1">원정대</div>
-                    <div className="text-xl font-bold text-white">Lv.{tabData['profiles'].ExpeditionLevel}</div>
-                  </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-400 w-8">영지</span>
+                  <span className="text-white font-bold">{tabData['profiles'].TownName || '-'} <span className="text-gray-300 font-normal ml-1">Lv.{tabData['profiles'].TownLevel || 0}</span></span>
                 </div>
               </div>
-
-              {/* 오른쪽: 소속 정보 */}
-              <div className="flex flex-col items-end text-sm space-y-3 bg-black/40 p-4 rounded-lg backdrop-blur-sm border border-white/5 h-fit">
-                <div className="flex items-center gap-3">
-                  <span className="text-gray-400">길드</span>
-                  <span className="text-white font-medium">{tabData['profiles'].GuildName || '-'}</span>
+              
+              {/* 하단 능력치 요약 */}
+              <div className="flex flex-wrap gap-6 sm:gap-10 mt-auto">
+                <div className="flex flex-col gap-1">
+                  <div className="text-[13px] text-gray-400 font-medium">아이템</div>
+                  <div className="text-2xl sm:text-[28px] font-extrabold text-white tracking-tight">{tabData['profiles'].ItemAvgLevel}</div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-gray-400">영지</span>
-                  <span className="text-white font-medium">{tabData['profiles'].TownName || '-'} <span className="text-gray-500 ml-1">Lv.{tabData['profiles'].TownLevel || 0}</span></span>
+                <div className="flex flex-col gap-1">
+                  <div className="text-[13px] text-gray-400 font-medium">전투력</div>
+                  <div className="text-2xl sm:text-[28px] font-extrabold text-[#ff6a6a] tracking-tight">{tabData['profiles'].CombatPower || '-'}</div>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <div className="text-[13px] text-gray-400 font-medium">전투</div>
+                  <div className="text-xl sm:text-2xl font-bold text-white mt-auto">Lv.{tabData['profiles'].CharacterLevel}</div>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <div className="text-[13px] text-gray-400 font-medium">원정대</div>
+                  <div className="text-xl sm:text-2xl font-bold text-white mt-auto">Lv.{tabData['profiles'].ExpeditionLevel}</div>
                 </div>
               </div>
-
+              
             </div>
           </div>
 
