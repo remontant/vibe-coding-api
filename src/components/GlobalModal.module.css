@@ -1,0 +1,122 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-main);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 384px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  animation: zoomIn 0.2s ease;
+}
+
+.body {
+  padding: 24px;
+  text-align: center;
+}
+
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.iconWrap svg {
+  width: 24px;
+  height: 24px;
+}
+
+.iconSuccess { background: rgba(33, 123, 70, 0.2); }
+.iconSuccess svg { color: var(--green); stroke: var(--green); }
+
+.iconError { background: rgba(255, 94, 94, 0.2); }
+.iconError svg { color: var(--red); stroke: var(--red); }
+
+.iconWarning { background: rgba(212, 175, 55, 0.2); }
+.iconWarning svg { color: var(--gold); stroke: var(--gold); }
+
+.iconInfo { background: rgba(76, 195, 255, 0.2); }
+.iconInfo svg { color: var(--blue); stroke: var(--blue); }
+
+.title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text-white);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.message {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.footer {
+  padding: 16px 24px;
+  background: var(--bg-banner);
+  border-top: 1px solid var(--border-main);
+  display: flex;
+  gap: 12px;
+}
+
+.btnCancel {
+  flex: 1;
+  padding: 12px;
+  background: var(--bg-deep);
+  border: none;
+  border-radius: 12px;
+  color: #d1d5db;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btnCancel:hover { background: var(--border-sub); }
+
+.btnConfirm {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnConfirmSuccess  { background: var(--green);  color: #fff; }
+.btnConfirmSuccess:hover  { background: var(--green-dark); }
+.btnConfirmError    { background: var(--red);    color: #fff; }
+.btnConfirmError:hover    { background: #e65555; }
+.btnConfirmWarning  { background: var(--gold);   color: #000; }
+.btnConfirmWarning:hover  { background: var(--gold-hover); }
+.btnConfirmInfo     { background: var(--gold);   color: #000; }
+.btnConfirmInfo:hover     { background: var(--gold-hover); }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}

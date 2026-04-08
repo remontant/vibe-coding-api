@@ -1,0 +1,120 @@
+.container { display: flex; flex-direction: column; gap: 24px; }
+
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+
+.headerTitle { font-size: 20px; font-weight: 700; color: var(--text-white); }
+
+.headerRight { display: flex; align-items: center; gap: 16px; font-size: 14px; }
+
+.headerCount { color: var(--text-muted); }
+
+.btnCopy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red);
+  color: var(--text-white);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btnCopy:hover { background: #e54444; }
+.btnCopy svg { width: 14px; height: 14px; }
+
+.skillGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.skillCard {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-main);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+.skillCard:hover { border-color: var(--border-light); }
+
+.skillTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skillLeft { display: flex; align-items: center; gap: 12px; }
+
+.skillLeft img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-sub); }
+
+.skillMeta { display: flex; align-items: center; gap: 8px; }
+
+.skillLv { color: var(--red); font-weight: 700; font-size: 14px; }
+
+.skillName { color: var(--text-white); font-weight: 700; font-size: 16px; }
+
+.skillType {
+  font-size: 12px;
+  color: var(--text-faint);
+  background: #222;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-sub);
+}
+
+.skillRight { display: flex; align-items: center; gap: 12px; }
+
+.skillCode {
+  background: var(--bg-deep);
+  color: #d1d5db;
+  font-size: 14px;
+  font-family: monospace;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-sub);
+  letter-spacing: 0.1em;
+}
+
+.skillToggle { color: var(--text-faint); transition: color 0.2s; cursor: pointer; }
+.skillCard:hover .skillToggle { color: var(--text-white); }
+
+.skillBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.tripods { display: flex; align-items: center; gap: 16px; }
+
+.tripodItem { display: flex; align-items: center; gap: 6px; }
+.tripodItem img { width: 24px; height: 24px; border-radius: 50%; }
+.tripodName { font-size: 12px; color: var(--text-muted); }
+
+.rune {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-dark);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #222;
+}
+.rune img { width: 20px; height: 20px; border-radius: 50%; }
+
+.runeLegend { font-size: 12px; font-weight: 700; color: #e5c171; }
+.runeHero   { font-size: 12px; font-weight: 700; color: #ce43fc; }
+.runeRare   { font-size: 12px; font-weight: 700; color: #00b5ff; }
+.runeNormal { font-size: 12px; font-weight: 700; color: #d1d5db; }
+
+.noData { color: var(--text-faint); font-size: 14px; }
+
+@media (min-width: 768px) {
+  .skillGrid { grid-template-columns: 1fr 1fr; }
+}

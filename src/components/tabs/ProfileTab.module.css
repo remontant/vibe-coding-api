@@ -1,0 +1,459 @@
+/* ── 전체 레이아웃 ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* ── 카드 공통 ── */
+.card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-main);
+  overflow: hidden;
+}
+
+.cardHeader {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-main);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardTitle { font-weight: 700; font-size: 14px; color: #e5e7eb; }
+
+.cardLink {
+  font-size: 12px;
+  color: var(--text-faint);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+.cardLink:hover { color: var(--gold); }
+
+.cardBody { padding: 16px; }
+
+.loadingText {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-faint);
+  padding: 80px 0;
+}
+
+/* ── 장비 ── */
+.equipGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.equipCol { display: flex; flex-direction: column; gap: 8px; }
+
+.equipItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-dark);
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #222;
+}
+
+.itemIconWrap {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 4px;
+  border: 1px solid var(--border-sub);
+  flex-shrink: 0;
+}
+
+/* 아이템 등급 그라데이션 배경 */
+.gradeEsder    { background: linear-gradient(135deg, #0c2e2c, #26a89c); }
+.gradeAncient  { background: linear-gradient(135deg, #3d3325, #dcc999); }
+.gradeRelic    { background: linear-gradient(135deg, #3a1b14, #c96226); }
+.gradeLegend   { background: linear-gradient(135deg, #362a0c, #c89d20); }
+.gradeDefault  { background: linear-gradient(135deg, #222, #444); }
+
+.itemIconWrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+
+.qualityBadge {
+  position: absolute;
+  bottom: -6px;
+  left: -6px;
+  font-size: 9px;
+  color: var(--text-white);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+  z-index: 10;
+  border: 1px solid #222;
+}
+
+.itemInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+
+.itemTitleRow { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+
+.itemType { font-size: 13px; font-weight: 700; color: #e3c7a1; }
+.itemRefine { color: var(--text-white); }
+.itemTierText { font-size: 11px; color: #9ca3af; }
+.itemAdvRefine { text-decoration: underline; text-decoration-color: #6b7280; text-underline-offset: 2px; color: #6b7280; }
+.itemTypeSpecial { font-size: 13px; font-weight: 700; color: var(--text-white); }
+
+.itemDetailRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.itemDetailLeft { display: flex; align-items: center; gap: 8px; }
+
+.qualityInline {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-white);
+}
+.qualityAcc { background: #00b5ff; }
+
+.plusBadge {
+  font-size: 10px;
+  background: #222;
+  color: #00b5ff;
+  border: 1px solid var(--border-sub);
+  padding: 2px 6px;
+  border-radius: 9999px;
+}
+
+.itemLevelText { font-size: 11px; color: #9ca3af; }
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  line-height: 1.4;
+  border-left: 1px solid var(--border-sub);
+  padding-left: 8px;
+  margin-left: 8px;
+}
+
+.optRow { display: flex; gap: 4px; }
+.optTop    { color: #ce43fc; }
+.optBottom { color: #00b5ff; }
+.optMid    { color: #91FE02; }
+.optText   { color: #d1d5db; }
+
+.stoneRow   { display: flex; gap: 4px; }
+.stoneLv    { color: var(--text-white); }
+.stonePenalty { color: var(--red); }
+.stoneName  { color: #9ca3af; }
+
+.specialName {
+  font-size: 10px;
+  color: #9ca3af;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+  border-left: 1px solid var(--border-sub);
+  padding-left: 8px;
+  margin-left: 8px;
+}
+
+.braceletOpts {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #9ca3af;
+  line-height: 1.6;
+  border-top: 1px solid #222;
+  padding-top: 8px;
+}
+
+.braceletOpt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── 팔찌 구분선 ── */
+.braceletSep {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--border-main);
+  padding-top: 16px;
+}
+
+/* ── 보석 ── */
+.gemSection { display: flex; flex-direction: column; gap: 24px; }
+
+.gemRow { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 16px; }
+
+.gemItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.gemIconWrap { position: relative; width: 48px; height: 48px; }
+.gemIconWrap img { width: 48px; height: 48px; border-radius: 8px; border: 1px solid var(--border-sub); box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+
+.gemSkillIcon {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background: #000;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.gemSkillIcon img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
+
+.gemLabel { font-size: 11px; font-weight: 700; color: #e5e7eb; letter-spacing: 0.05em; }
+
+.gemTooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  display: none;
+  white-space: nowrap;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-sub);
+  padding: 6px 10px;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  font-size: 12px;
+  color: #e5e7eb;
+  z-index: 20;
+  pointer-events: none;
+}
+.gemTooltipName { color: #FFD200; font-weight: 700; }
+.gemItem:hover .gemTooltip { display: block; }
+
+.gemEmpty { text-align: center; font-size: 14px; color: var(--text-faint); padding: 16px 0; }
+
+/* ── 특성 ── */
+.statList { display: flex; flex-direction: column; gap: 0; }
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.statLeft { display: flex; align-items: center; gap: 8px; }
+
+.statDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.statDotRed  { background: var(--red); }
+.statDotGold { background: var(--gold); }
+.statDotBlue { background: var(--blue); }
+
+.statName { color: #9ca3af; font-size: 14px; }
+.statVal  { color: var(--text-white); font-weight: 700; }
+
+.statFooter {
+  font-size: 12px;
+  color: #9ca3af;
+  border-top: 1px solid var(--border-main);
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.statFooterVal { color: var(--text-white); }
+
+/* ── 아크 패시브 ── */
+.arkCard {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-main);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.arkPointsRow {
+  padding: 12px 16px;
+  background: var(--bg-dark);
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.arkPointItem { display: flex; align-items: center; gap: 8px; }
+
+.arkPointBadge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+  color: #d1d5db;
+  background: #222;
+}
+.arkPointBadgeEvo   { border-color: rgba(229, 193, 113, 0.5); }
+.arkPointBadgeEnl   { border-color: rgba(135, 189, 245, 0.5); }
+.arkPointBadgeLeap  { border-color: rgba(170, 221, 102, 0.5); }
+
+.arkPointVal        { font-size: 14px; font-weight: 700; }
+.arkPointValEvo     { color: #e5c171; }
+.arkPointValEnl     { color: #87bdf5; }
+.arkPointValLeap    { color: #aadd66; }
+
+.arkEffectsHeader {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-main);
+  border-bottom: 1px solid var(--border-main);
+  background: var(--bg-card);
+  font-weight: 700;
+  font-size: 14px;
+  color: #e5e7eb;
+}
+
+.arkEffectSection { display: flex; flex-direction: column; border-bottom: 1px solid #222; }
+.arkEffectSection:last-child { border-bottom: none; }
+
+.arkEffectSectionTitle {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.arkTitleEvo   { color: #e5c171; }
+.arkTitleEnl   { color: var(--blue); }
+.arkTitleLeap  { color: #aadd66; }
+
+.arkEffectGrid { display: grid; grid-template-columns: 1fr 1fr; }
+
+.arkEffectItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-top: 1px solid #222;
+}
+.arkEffectItem:nth-child(even) { border-left: 1px solid #222; }
+
+.arkEffectItem img { width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--border-sub); }
+
+.arkEffectInfo { display: flex; align-items: center; gap: 8px; }
+
+.arkEffectTier {
+  background: var(--bg-deep);
+  color: #d1d5db;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+}
+
+.arkEffectLv { color: #e5e7eb; font-size: 14px; font-weight: 700; }
+
+/* ── 각인 ── */
+.engravingCard {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-main);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.engravingSubHeader {
+  padding: 8px 16px;
+  border-bottom: 1px solid #222;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: var(--bg-dark);
+}
+
+.engravingSubText { font-size: 12px; color: #aadd66; }
+
+.engravingList { display: flex; flex-direction: column; background: var(--bg-dark); }
+
+.engravingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid #222;
+  transition: background 0.2s;
+}
+.engravingItem:last-child { border-bottom: none; }
+.engravingItem:hover { background: var(--bg-input); }
+
+.engravingLeft { display: flex; align-items: center; gap: 12px; }
+.engravingLeft img { width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--border-sub); }
+.engravingName { font-size: 14px; font-weight: 700; color: #e5e7eb; }
+
+.engravingRight { display: flex; align-items: center; gap: 12px; }
+
+.engravingStone { display: flex; align-items: center; gap: 4px; }
+.engravingStoneIcon { color: var(--red); font-size: 10px; }
+.engravingStoneLv   { color: #d1d5db; font-size: 14px; }
+
+.engravingLv { display: flex; align-items: center; gap: 4px; width: 48px; justify-content: flex-end; }
+.engravingLvIcon { color: var(--blue); font-size: 10px; }
+.engravingLvText { color: #d1d5db; font-size: 14px; }
+
+/* ── 보주 ── */
+.orbSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-dark);
+  padding: 16px;
+}
+
+.orbIconWrap {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 4px;
+  border: 1px solid var(--border-sub);
+  flex-shrink: 0;
+}
+.orbIconWrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+
+.orbInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.orbName { font-size: 13px; font-weight: 700; color: var(--text-white); }
+.orbEffect { font-size: 11px; color: #9ca3af; line-height: 1.6; }
+
+/* ── 반응형 ── */
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(12, 1fr); }
+  .colLeft { grid-column: span 6; }
+  .colRight { grid-column: span 6; }
+}
+
+@media (min-width: 768px) {
+  .rightGrid { grid-template-columns: 1fr 1fr; }
+}
+
+.colLeft { display: flex; flex-direction: column; gap: 16px; }
+.colRight {}
+
+.rightGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.rightLeft  { display: flex; flex-direction: column; gap: 16px; }
+.rightRight { display: flex; flex-direction: column; gap: 16px; }

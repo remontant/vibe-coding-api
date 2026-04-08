@@ -1,0 +1,152 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid var(--border-main);
+  background: var(--bg-dark);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: 32px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 100%;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--text-white);
+  text-decoration: none;
+  letter-spacing: -0.05em;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+  align-items: center;
+}
+
+.navLink {
+  font-size: 14px;
+  font-weight: 700;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  padding: 0 4px;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+.navLink:hover { color: var(--text-white); }
+.navLinkActive {
+  border-bottom-color: var(--text-white);
+  color: var(--text-white);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatarWrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #222;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-white);
+  display: none;
+}
+
+.userNameSub {
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 1px solid var(--border-sub);
+  padding-left: 16px;
+}
+
+.btnLogout,
+.btnDelete {
+  font-size: 12px;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-faint);
+  transition: color 0.2s;
+}
+.btnLogout:hover { color: var(--text-white); }
+.btnDelete:hover { color: var(--red); }
+
+.btnLogin {
+  font-size: 14px;
+  font-weight: 700;
+  color: #d1d5db;
+  text-decoration: none;
+  background: #222;
+  border: 1px solid var(--border-sub);
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.btnLogin:hover {
+  background: var(--border-sub);
+  color: var(--text-white);
+}
+
+@media (min-width: 640px) {
+  .inner { padding: 0 24px; }
+  .userName { display: block; }
+}
+@media (min-width: 1024px) {
+  .inner { padding: 0 32px; }
+}

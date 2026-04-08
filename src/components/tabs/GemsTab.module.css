@@ -1,0 +1,155 @@
+.container { display: flex; flex-direction: column; gap: 24px; }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerTitle { font-size: 20px; font-weight: 700; color: var(--text-white); }
+
+.sortBar {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-input);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--border-main);
+}
+
+.sortBtn {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.sortBtn:hover { color: #e5e7eb; }
+.sortBtnActive {
+  background: var(--bg-deep);
+  color: var(--text-white);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.body { display: flex; flex-direction: column; gap: 40px; }
+
+/* ── 섹션 (딜/쿨) ── */
+.section { display: flex; flex-direction: column; gap: 16px; }
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--border-main);
+  padding-bottom: 8px;
+}
+
+.sectionDot { width: 10px; height: 10px; border-radius: 50%; }
+.dotDmg  { background: var(--red); }
+.dotCool { background: var(--blue); }
+
+.sectionTitle { font-size: 18px; font-weight: 700; color: var(--text-white); }
+.sectionCount { color: var(--text-muted); font-size: 14px; margin-left: 8px; }
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* ── 보석 카드 ── */
+.gemCard {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-main);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+.gemCard:hover { border-color: var(--border-light); }
+
+.cardIconWrap { position: relative; flex-shrink: 0; }
+.cardIconWrap img { width: 56px; height: 56px; border-radius: 8px; border: 1px solid var(--border-sub); }
+
+.cardLvBadge {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  background: #000;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  font-weight: 700;
+  color: var(--text-white);
+  z-index: 10;
+}
+
+.cardInfo { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+
+.cardLabelRow { display: flex; align-items: center; gap: 8px; }
+.cardLabelDmg  { font-size: 14px; font-weight: 700; color: var(--red); }
+.cardLabelCool { font-size: 14px; font-weight: 700; color: var(--blue); }
+.cardGrade { font-size: 12px; color: var(--text-faint); }
+
+.cardSkill { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.cardSkill img { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border-light); }
+.cardSkillName { color: #e5e7eb; font-weight: 700; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── 리스트형 ── */
+.listCard {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-main);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.listRow {
+  background: none;
+  border-bottom: 1px solid var(--border-main);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.2s;
+}
+.listRow:last-child { border-bottom: none; }
+.listRow:hover { background: var(--bg-hover); }
+
+.listRowInner { display: flex; align-items: center; gap: 24px; width: 100%; }
+
+.listIconWrap { position: relative; flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; }
+.listIconWrap img { width: 40px; height: 40px; border-radius: 4px; border: 1px solid var(--border-sub); }
+
+.listBadgeWrap { flex-shrink: 0; width: 80px; }
+.listBadge {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 9999px;
+  background: #3b30d8;
+  color: var(--text-white);
+}
+
+.listSkillName { width: 192px; flex-shrink: 0; }
+.listSkillNameText { color: #f3f4f6; font-weight: 700; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.listEffect { flex: 1; color: var(--text-muted); font-size: 14px; }
+
+.noData { color: var(--text-faint); font-size: 14px; }
+
+@media (min-width: 768px) {
+  .cardGrid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .cardGrid { grid-template-columns: 1fr 1fr 1fr; }
+}

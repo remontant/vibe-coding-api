@@ -1,0 +1,66 @@
+.main {
+  min-height: 100vh;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero {
+  width: 100%;
+  max-width: 672px;
+  margin-bottom: 48px;
+  margin-top: 40px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.titleBlue {
+  color: #58C7F3;
+  filter: drop-shadow(0 0 10px rgba(88, 199, 243, 0.25));
+}
+
+.titleGold {
+  color: #FFD700;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+  margin-left: 4px;
+}
+
+.desc {
+  color: var(--text-muted);
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding: 96px;
+  }
+  .hero {
+    margin-top: 80px;
+    padding: 0;
+  }
+  .title {
+    font-size: 48px;
+  }
+}
