@@ -35,7 +35,7 @@ function SiblingCard({ char, isSearched, onCharacterClick }: { char: any, isSear
               // 퍼센트(%) 값이 클수록 이미지의 '아랫부분(몸통)'이 보입니다.
               // 요즈족(도화가 등)의 이미지가 위로 올라가게(머리 쪽이 더 보이게) 하려면 25% -> 15% 이런 식으로 숫자를 줄이시면 됩니다.
               backgroundPosition: ['도화가', '기상술사', '환수사'].includes(char.CharacterClassName) 
-                ? 'center 32%' 
+                ? 'center 31%' 
                 : 'center 15%',
               backgroundRepeat: 'no-repeat'
             }}

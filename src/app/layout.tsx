@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import GlobalModal from "@/components/GlobalModal";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "망고네 로아 검색기",
-  description: "더더욱 발전해 나갈 망고네 로스트아크 정보 검색기, 두둥",
+  title: "망고네 로스트아크",
+  description: "더더욱 발전해 나갈 망고네 로스트아크 정보 검색기, 레이드 약속, 숙제체크- 두둥",
 };
 
 export default function RootLayout({
@@ -27,7 +29,11 @@ export default function RootLayout({
       lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-black text-white">
+        <Navbar />
+        {children}
+        <GlobalModal />
+      </body>
     </html>
   );
 }

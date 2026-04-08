@@ -27,7 +27,6 @@ export default function CharacterSearch() {
   
   // 최근 검색어 상태
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
-  const [showRecent, setShowRecent] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   // 로컬 스토리지에서 최근 검색어 불러오기
@@ -40,19 +39,10 @@ export default function CharacterSearch() {
         console.error('최근 검색어 파싱 오류', e);
       }
     }
-
-    // 바깥쪽 클릭 시 최근 검색어 닫기
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
-        setShowRecent(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const saveRecentSearch = (name: string) => {
-    const updatedSearches = [name, ...recentSearches.filter((s) => s !== name)].slice(0, 10); // 최대 10개
+    const updatedSearches = [name, ...recentSearches.filter((s) => s !== name)].slice(0, 5); // 최대 5개
     setRecentSearches(updatedSearches);
     localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
   };
@@ -89,7 +79,6 @@ export default function CharacterSearch() {
     if (!name.trim()) return;
 
     setCharacterName(name);
-    setShowRecent(false); // 검색 시 드롭다운 닫기
     saveRecentSearch(name); // 최근 검색어 저장
 
     // 새로운 검색 시 데이터 초기화
@@ -122,62 +111,17 @@ export default function CharacterSearch() {
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col gap-6">
-      {/* 검색 폼 */}
-      <div className="flex justify-center mb-4 px-4 sm:px-0" ref={searchContainerRef}>
-        <form onSubmit={handleSearch} className="flex gap-3 relative w-full max-w-md">
+      {/* 검색 폼 및 최근 검색어 */}
+      <div className="flex flex-col items-center mb-4 px-4 sm:px-0" ref={searchContainerRef}>
+        <form onSubmit={handleSearch} className="flex gap-3 relative w-full max-w-xl">
           <div className="w-full relative">
             <input
               type="text"
               value={characterName}
               onChange={(e) => setCharacterName(e.target.value)}
-              onFocus={() => setShowRecent(true)}
               placeholder="캐릭터 이름을 입력하세요 (예: 전기훈)"
               className="w-full bg-[#1a1c23] border border-[#2a2d36] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#d4af37] transition-colors"
             />
-            {/* 최근 검색어 드롭다운 */}
-            {showRecent && recentSearches.length > 0 && (
-              <div className="absolute top-full left-0 w-full mt-2 bg-[#1a1c23] border border-[#2a2d36] rounded-lg shadow-2xl z-50 overflow-hidden">
-                <div className="flex justify-between items-center px-4 py-2 bg-[#111] border-b border-[#2a2d36]">
-                  <span className="text-xs text-gray-400 font-bold">최근 검색 캐릭터</span>
-                  <button 
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setRecentSearches([]);
-                      localStorage.removeItem('recentSearches');
-                    }}
-                    className="text-xs text-gray-500 hover:text-red-400 transition-colors"
-                  >
-                    전체 삭제
-                  </button>
-                </div>
-                <ul className="max-h-60 overflow-y-auto">
-                  {recentSearches.map((name, idx) => (
-                    <li 
-                      key={idx}
-                      className="flex justify-between items-center px-4 py-2.5 hover:bg-[#22252e] cursor-pointer transition-colors border-b border-[#2a2d36] last:border-0"
-                      onClick={() => performSearch(name)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span className="text-sm text-gray-200">{name}</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={(e) => removeRecentSearch(e, name)}
-                        className="text-gray-500 hover:text-[#ff5e5e] p-1"
-                      >
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
           <button
             type="submit"
@@ -189,6 +133,60 @@ export default function CharacterSearch() {
             </span>
           </button>
         </form>
+
+        {/* 최근 검색어 태그 */}
+        {recentSearches.length > 0 && (
+          <div className="w-full max-w-xl mt-4 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-gray-500 mr-1 font-medium">최근검색어</span>
+            {recentSearches.map((name, idx) => (
+              <div 
+                key={idx}
+                className="flex items-center bg-[#1a1c23] hover:bg-[#22252e] border border-[#2a2d36] rounded-full pl-3 pr-1 py-1 transition-colors cursor-pointer group"
+                onClick={() => performSearch(name)}
+              >
+                <span className="text-xs text-gray-300 mr-2">{name}</span>
+                <button
+                  type="button"
+                  onClick={(e) => removeRecentSearch(e, name)}
+                  className="text-gray-500 hover:text-[#ff5e5e] p-1 rounded-full hover:bg-black/20"
+                >
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* 이번주 레이드 약속 (검색 결과가 없을 때 노출) */}
+        {Object.keys(tabData).length === 0 && (
+          <div className="w-full max-w-xl mt-10">
+            <a 
+              href="/raid" 
+              className="group block w-full bg-[#161719] hover:bg-[#1a1c23] border border-[#2a2d36] rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:border-[#d4af37]/50"
+            >
+              <div className="flex justify-between items-center">
+                <div className="flex flex-col items-start gap-1">
+                  <div className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#d4af37]/20 text-[#d4af37] mb-1">
+                    수요일 ~ 화요일
+                  </div>
+                  <h2 className="text-xl font-bold text-white group-hover:text-[#d4af37] transition-colors">
+                    이번주 레이드 약속 🗓️
+                  </h2>
+                  <p className="text-sm text-gray-400 mt-1">
+                    이번 주 레이드 스케줄을 캘린더에 연동하고 관리하세요.
+                  </p>
+                </div>
+                <div className="text-gray-500 group-hover:text-[#d4af37] transition-colors transform group-hover:translate-x-1 duration-300">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
       </div>
 
       {/* 에러 메시지 */}
