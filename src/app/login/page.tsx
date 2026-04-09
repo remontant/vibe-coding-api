@@ -6,6 +6,7 @@ import { ref, get, set } from 'firebase/database';
 import { db } from '@/lib/firebase';
 import { getCharacterData } from '@/app/actions';
 import { useModalStore } from '@/store/modalStore';
+import { useAuthStore } from '@/store/authStore';
 import SHA256 from 'crypto-js/sha256';
 import styles from './login.module.css';
 
@@ -15,6 +16,7 @@ const DEFAULT_IMAGE = 'https://img.lostark.co.kr/armory/3/BCFECAB4BFB898D2F165F0
 export default function LoginPage() {
   const router = useRouter();
   const { openModal } = useModalStore();
+  const { login } = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -52,12 +54,13 @@ export default function LoginPage() {
               }
             } catch {}
           }
-          localStorage.setItem('user', JSON.stringify({
+          // authStore.login이 localStorage 저장 + Zustand 상태 업데이트를 동시에 처리
+          login({
             id: loginId,
             mainCharacter: userData.mainCharacter,
             image: userData.image,
             characterClassName: className || '',
-          }));
+          });
           openModal({ title: '로그인 성공', message: '환영합니다! 로그인이 완료되었습니다.', type: 'success' });
           router.push('/');
         } else {

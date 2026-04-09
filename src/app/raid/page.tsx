@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ref, onValue, set, remove } from 'firebase/database';
 import { db } from '@/lib/firebase';
 import { useModalStore } from '@/store/modalStore';
+import { useAuthStore } from '@/store/authStore';
 import styles from './raid.module.css';
 
 const DAYS_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'];
@@ -11,21 +12,19 @@ const YOZ_CLASSES = ['도화가', '기상술사', '환수사'];
 
 type ParticipantData = { name: string; image: string; characterClassName?: string; memo: string };
 type ScheduleMap = { [dateKey: string]: { [userId: string]: ParticipantData } };
-type UserType = { id: string; mainCharacter: string; image: string; characterClassName?: string };
 
 export default function RaidPage() {
   const { openModal } = useModalStore();
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  // authStore에서 직접 구독 — localStorage 읽기 코드 제거
+  const { user: currentUser, init } = useAuthStore();
   const [schedules, setSchedules] = useState<ScheduleMap>({});
   const [weeks, setWeeks] = useState<{ title: string; days: Date[] }[]>([]);
   const [editingMemoKey, setEditingMemoKey] = useState<string | null>(null);
   const [localMemo, setLocalMemo] = useState('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try { setCurrentUser(JSON.parse(storedUser)); } catch (e) { console.error(e); }
-    }
+    // authStore가 아직 초기화되지 않았을 경우를 위해 init 호출
+    init();
 
     const schedulesRef = ref(db, 'schedules');
     const unsubscribe = onValue(schedulesRef, (snapshot) => {
@@ -55,7 +54,7 @@ export default function RaidPage() {
     setWeeks(calculatedWeeks);
 
     return () => unsubscribe();
-  }, []);
+  }, [init]);
 
   const getDateKey = (date: Date) =>
     `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;

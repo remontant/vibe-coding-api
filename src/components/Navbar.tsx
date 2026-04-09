@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ref, remove } from 'firebase/database';
-import { db } from '@/lib/firebase';
 import { useModalStore } from '@/store/modalStore';
+import { useAuthStore } from '@/store/authStore';
 import styles from './Navbar.module.css';
 
 const YOZ_CLASSES = ['도화가', '기상술사', '환수사'];
@@ -14,26 +13,21 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { openModal } = useModalStore();
-  const [user, setUser] = useState<{ id: string; mainCharacter: string; image: string; characterClassName?: string } | null>(null);
 
+  // authStore에서 user 상태 직접 구독 — localStorage 읽기 코드 제거
+  const { user, init, logout, deleteAccount } = useAuthStore();
+
+  // 앱 최초 마운트 시 localStorage에서 복원
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error('User parsing error:', e);
-      }
-    }
-  }, [pathname]);
+    init();
+  }, [init]);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
+    logout();
     router.push('/');
   };
 
-  const handleDeleteAccount = async () => {
+  const handleDeleteAccount = () => {
     if (!user) return;
 
     openModal({
@@ -43,14 +37,10 @@ export default function Navbar() {
       showCancel: true,
       onConfirm: async () => {
         try {
-          const userRef = ref(db, `users/${user.id}`);
-          await remove(userRef);
+          await deleteAccount();
           openModal({ title: '탈퇴 완료', message: '회원탈퇴가 완료되었습니다.', type: 'success' });
-          localStorage.removeItem('user');
-          setUser(null);
           router.push('/');
-        } catch (error) {
-          console.error('회원탈퇴 에러:', error);
+        } catch {
           openModal({ title: '탈퇴 실패', message: '회원탈퇴 처리 중 에러가 발생했습니다.', type: 'error' });
         }
       },

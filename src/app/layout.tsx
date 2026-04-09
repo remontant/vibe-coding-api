@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import GlobalModal from "@/components/GlobalModal";
+import Providers from "@/components/Providers";
 import styles from "./layout.module.css";
 import "./globals.css";
 
@@ -31,9 +32,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className={styles.body}>
-        <Navbar />
-        {children}
-        <GlobalModal />
+        <Providers>
+          <Navbar />
+          {children}
+          <GlobalModal />
+        </Providers>
       </body>
     </html>
   );
