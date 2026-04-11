@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import CharacterSearch from "@/components/CharacterSearch";
 import styles from "./page.module.css";
 
@@ -15,7 +16,9 @@ export default function Home() {
           캐릭터의 클래스, 레벨, 장비 정보를 확인하세요
         </p>
       </div>
-      <CharacterSearch />
+      <Suspense>
+        <CharacterSearch />
+      </Suspense>
     </main>
   );
 }

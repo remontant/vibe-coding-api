@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  overflow: visible;
 }
 
 /* ── 검색 영역 ── */
@@ -12,117 +13,209 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 16px;
+  width: 100%;
   padding: 0 16px;
+  position: relative;
+  overflow: visible; /* 드롭다운 + hotBar 스크롤 클리핑 방지 */
 }
 
+/* pill 통합형 검색창 */
 .searchForm {
-  display: flex;
-  gap: 12px;
   width: 100%;
-  max-width: 576px;
+  max-width: 560px;
   position: relative;
 }
 
-.inputWrap { width: 100%; position: relative; }
+.inputWrap { width: 100%; }
 
 .searchInput {
   width: 100%;
-  background: var(--bg-input);
-  border: 1px solid var(--border-main);
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 14px;
+  background: #1e2128;
+  border: 1.5px solid #2e3140;
+  border-radius: 9999px;
+  padding: 13px 52px 13px 22px;
+  font-size: 15px;
   color: var(--text-white);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
 }
-.searchInput:focus { border-color: var(--gold); }
+.searchInput::placeholder { color: #6b7280; }
+.searchInput:focus {
+  border-color: #4b5263;
+  background: #23262f;
+}
 
+/* 검색 아이콘 — input 오른쪽 안쪽에 위치 */
 .searchBtn {
-  background: var(--gold);
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  border-radius: 8px;
-  padding: 12px 32px;
-  color: #000;
-  font-size: 14px;
-  font-weight: 700;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background 0.2s;
-  white-space: nowrap;
-  min-width: 120px;
+  color: #6b7280;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.15s;
   flex-shrink: 0;
 }
-.searchBtn:hover:not(:disabled) { background: var(--gold-hover); }
-.searchBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.searchBtn:hover:not(:disabled) { color: #22c55e; background: rgba(34,197,94,0.08); }
+.searchBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+.searchBtn svg { width: 18px; height: 18px; }
 
-/* ── 최근 검색어 ── */
-.recentList {
+/* ── HOT 캐릭터 ── */
+
+/* 바깥 래퍼 — 전체 영역에서 중앙 정렬 */
+.hotBarWrap {
   width: 100%;
-  max-width: 576px;
-  margin-top: 16px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+}
+
+/* HOT 캐릭터 목록 */
+.hotBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; /* 공간이 모자라면 자동으로 줄바꿈 */
+  gap: 6px;
+  padding: 4px 0;
+  width: 100%;
+  max-width: 760px; /* 5개가 한 줄에 넉넉히 들어갈 수 있는 너비 */
+}
+
+.hotItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #1a1d23;
+  border: 1px solid #2a2d35;
+  border-radius: 20px;
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hotItem:hover { background: #22252e; border-color: #4b5263; }
+
+.hotFlame { font-size: 12px; line-height: 1; }
+
+.hotName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.hotLevelDps {
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hotLevelSupport {
+  font-size: 11px;
+  color: #4ade80;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── 최근 검색어 드롭다운 ── */
+.recentList {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 560px;
+  background: #1e2128;
+  border: 1.5px solid #2e3140;
+  border-radius: 16px;
+  padding: 10px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+
+.recentTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+  padding: 0 4px 2px;
+  border-bottom: 1px solid #2e3140;
+  padding-bottom: 6px;
+}
+
+.recentTagsRow {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.recentLabel {
-  font-size: 12px;
-  color: var(--text-faint);
-  font-weight: 500;
-  margin-right: 4px;
-}
+.recentLabel { display: none; }
 
 .recentTag {
   display: flex;
   align-items: center;
-  background: var(--bg-input);
-  border: 1px solid var(--border-main);
+  background: #23262f;
+  border: 1px solid #2e3140;
   border-radius: 9999px;
-  padding: 4px 4px 4px 12px;
+  padding: 5px 6px 5px 12px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s;
 }
-.recentTag:hover { background: var(--bg-hover); }
+.recentTag:hover { background: #2a2d38; }
 
 .recentTagName {
   font-size: 12px;
   color: #d1d5db;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 .recentTagRemove {
-  color: var(--text-faint);
+  color: #6b7280;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 3px;
   border-radius: 50%;
   display: flex;
   align-items: center;
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.15s;
 }
-.recentTagRemove:hover { color: var(--red); background: rgba(0,0,0,0.2); }
+.recentTagRemove:hover { color: var(--red); }
 .recentTagRemove svg { width: 12px; height: 12px; }
 
 /* ── 레이드 배너 ── */
 .raidBanner {
   width: 100%;
-  max-width: 576px;
+  max-width: 560px;
   margin-top: 40px;
   text-decoration: none;
   display: block;
-  background: var(--bg-banner);
-  border: 1px solid var(--border-main);
+  background: rgba(79, 70, 229, 0.06);
+  border: 1px solid rgba(79, 70, 229, 0.25);
   border-radius: 12px;
   padding: 24px;
   transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 .raidBanner:hover {
-  background: var(--bg-input);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(79, 70, 229, 0.12);
+  box-shadow: 0 8px 30px rgba(79, 70, 229, 0.2);
+  border-color: rgba(79, 70, 229, 0.5);
 }
 
 .raidBannerInner { display: flex; justify-content: space-between; align-items: center; }
@@ -141,8 +234,8 @@
   border-radius: 4px;
   font-size: 10px;
   font-weight: 700;
-  background: rgba(212, 175, 55, 0.2);
-  color: var(--gold);
+  background: rgba(79, 70, 229, 0.2);
+  color: #818cf8;
   margin-bottom: 4px;
 }
 
@@ -152,7 +245,7 @@
   color: var(--text-white);
   transition: color 0.2s;
 }
-.raidBanner:hover .raidBannerTitle { color: var(--gold); }
+.raidBanner:hover .raidBannerTitle { color: #a5b4fc; }
 
 .raidBannerDesc {
   font-size: 14px;
@@ -161,11 +254,11 @@
 }
 
 .raidBannerArrow {
-  color: var(--text-faint);
+  color: rgba(79, 70, 229, 0.5);
   transition: color 0.2s, transform 0.3s;
 }
 .raidBannerArrow svg { width: 24px; height: 24px; }
-.raidBanner:hover .raidBannerArrow { color: var(--gold); transform: translateX(4px); }
+.raidBanner:hover .raidBannerArrow { color: #818cf8; transform: translateX(4px); }
 
 /* ── 에러 ── */
 .errorBox {

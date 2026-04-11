@@ -1,6 +1,6 @@
 .main {
   min-height: 100vh;
-  padding: 32px 0;
+  padding: 24px 16px 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,32 +8,31 @@
 
 .hero {
   width: 100%;
-  max-width: 672px;
-  margin-bottom: 48px;
-  margin-top: 40px;
+  max-width: 640px;
+  margin-top: 48px;
+  margin-bottom: 32px;
   text-align: center;
-  padding: 0 16px;
 }
 
 .badge {
   display: inline-block;
   padding: 4px 12px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   border-radius: 9999px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   background: rgba(212, 175, 55, 0.1);
   color: var(--gold);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
 .title {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--text-white);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   letter-spacing: -0.02em;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .titleBlue {
@@ -44,23 +43,43 @@
 .titleGold {
   color: #FFD700;
   filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
-  margin-left: 4px;
 }
 
 .desc {
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: 14px;
 }
 
-@media (min-width: 768px) {
+/* ── 태블릿 이상 ── */
+@media (min-width: 640px) {
   .main {
-    padding: 96px;
+    padding: 48px 24px 64px;
+  }
+  .hero {
+    margin-top: 64px;
+    margin-bottom: 40px;
+  }
+  .title {
+    font-size: 40px;
+  }
+  .desc {
+    font-size: 16px;
+  }
+}
+
+/* ── 데스크톱 ── */
+@media (min-width: 1024px) {
+  .main {
+    padding: 80px 48px 80px;
   }
   .hero {
     margin-top: 80px;
-    padding: 0;
+    margin-bottom: 48px;
   }
   .title {
-    font-size: 48px;
+    font-size: 52px;
+  }
+  .desc {
+    font-size: 18px;
   }
 }

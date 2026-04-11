@@ -1,0 +1,688 @@
+.main {
+  min-height: 100vh;
+  background: #0b0d11;
+  color: #e2e8f0;
+  padding-bottom: 80px;
+}
+
+/* ── 페이지 헤더 ─────────────────────── */
+.pageHeader {
+  background: rgba(18, 21, 28, 0.95);
+  border-bottom: 1px solid #1e293b;
+  padding: 20px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+}
+
+.pageHeaderInner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.headerIcon {
+  width: 46px;
+  height: 46px;
+  background: #4f46e5;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+  transform: rotate(3deg);
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #f1f5f9;
+  margin: 0 0 4px;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.headerSub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cycleBadge {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.12);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+
+.cycleDesc {
+  font-size: 0.72rem;
+  color: #475569;
+}
+
+/* ── 주 탭 ────────────────────────────── */
+.weekTabs {
+  display: flex;
+  background: #0b0d11;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 5px;
+}
+
+.weekTab {
+  padding: 9px 28px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.weekTab:hover { color: #cbd5e1; }
+
+.weekTabActive {
+  background: #4f46e5;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+/* ── 카드 목록 ────────────────────────── */
+.cardList {
+  max-width: 860px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── 카드 ─────────────────────────────── */
+.card {
+  display: flex;
+  gap: 0;
+  background: #12151c;
+  border: 1px solid #1e293b;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  background: #161a24;
+}
+
+.cardToday {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.06);
+}
+
+/* ── 날짜 뱃지 ────────────────────────── */
+.dateBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 0 22px;
+  min-width: 80px;
+  border-right: 1px solid #1e293b;
+  flex-shrink: 0;
+}
+
+.dayName {
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.sun { color: #ef4444; }
+.sat { color: #3b82f6; }
+
+.dateNum {
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: #f1f5f9;
+}
+
+.todayBadge {
+  margin-top: 4px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 0.5rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+}
+
+.pastBadge {
+  margin-top: 4px;
+  background: #1e293b;
+  color: #475569;
+  font-size: 0.5rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* ── 과거 날짜 카드 ──────────────────── */
+.cardPast {
+  opacity: 0.45;
+  filter: grayscale(0.4);
+}
+
+/* ── 참여 가능 멤버 ──────────────────── */
+.memberSection {
+  flex: 1;
+  padding: 18px 20px;
+  border-right: 1px solid #1e293b;
+}
+
+.memberHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.memberHeaderBusy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 20px;
+}
+
+.memberHeaderTitle {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.memberCountAvail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #10b981;
+}
+
+.memberCountBusy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ef4444;
+}
+
+.memberList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.memberChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0b0d11;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 8px 14px 8px 10px;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.memberChip:hover { border-color: #334155; }
+
+.memberChipMine {
+  border-color: rgba(99, 102, 241, 0.4);
+  position: relative;
+}
+
+.chipRemoveBtn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 1.5px solid #0b0d11;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.memberChipMine:hover .chipRemoveBtn {
+  opacity: 1;
+}
+
+.memberAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.memberAvatarImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: #1e293b;
+  overflow: hidden;
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.memberName {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #c7d2fe;
+}
+
+.memberMemo {
+  font-size: 0.68rem;
+  color: #64748b;
+  font-style: italic;
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emptyMembers {
+  padding: 14px 18px;
+  border: 1px dashed #1e293b;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* ── 불가 멤버 ── */
+.memberChipBusy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 6px 12px 6px 6px;
+  opacity: 0.85;
+}
+
+.memberInfoBusy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.memberNameBusy {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.memberMemoBusy {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.memoAlertIcon {
+  flex-shrink: 0;
+  color: #f87171;
+}
+
+/* ── 내 상태 ──────────────────────────── */
+.mySection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 18px;
+  width: 200px;
+  flex-shrink: 0;
+  background: rgba(11, 13, 17, 0.4);
+}
+
+.mySectionPast {
+  pointer-events: none;
+}
+
+.mySectionTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mySectionLabel {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #818cf8;
+  letter-spacing: 0.1em;
+}
+
+.editBtn {
+  background: transparent;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.editBtn:hover { color: #f1f5f9; }
+
+.myCharacterRow {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -2px;
+  margin-bottom: 2px;
+}
+
+.myCharacterTag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #12151c;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+}
+
+.myCharacterAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #4f46e5;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #1e293b;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+}
+
+.myCharacterName {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.statusBtns {
+  display: flex;
+  gap: 6px;
+}
+
+.statusBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 9px 0;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  background: #0b0d11;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.statusBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+.statusBtn:not(:disabled):hover { border-color: #334155; color: #cbd5e1; }
+
+.statusBtnAvail {
+  background: #10b981 !important;
+  border-color: #34d399 !important;
+  color: #fff !important;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25);
+}
+
+.statusBtnBusy {
+  background: #ef4444 !important;
+  border-color: #f87171 !important;
+  color: #fff !important;
+  box-shadow: 0 3px 10px rgba(239, 68, 68, 0.25);
+}
+
+.memoArea {
+  font-size: 0.72rem;
+  color: #475569;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 8px;
+  padding: 7px 10px;
+  cursor: default;
+  line-height: 1.4;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.memoAreaFilled {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.07);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  cursor: pointer;
+}
+
+/* ── 메모 모달 ────────────────────────── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modalBox {
+  background: #12151c;
+  border: 1px solid #1e293b;
+  border-radius: 22px;
+  width: 100%;
+  max-width: 380px;
+  padding: 28px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  margin-bottom: 16px;
+}
+
+.memoTextarea {
+  width: 100%;
+  height: 80px;
+  background: #0b0d11;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  line-height: 1.5;
+  font-family: inherit;
+}
+
+.memoTextarea::placeholder { color: #334155; }
+.memoTextarea:focus { border-color: #4f46e5; }
+
+.quickMemos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.quickMemoBtn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quickMemoBtn:hover {
+  background: rgba(79, 70, 229, 0.1);
+  color: #a5b4fc;
+  border-color: #4f46e5;
+}
+
+.modalFooter {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modalCancel {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #1e293b;
+  background: #0f1117;
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modalCancel:hover { color: #f1f5f9; border-color: #334155; }
+
+.modalSave {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+.modalSave:hover { background: #4338ca; }
+
+/* ── 반응형 ───────────────────────────── */
+@media (max-width: 640px) {
+  .card {
+    flex-direction: column;
+    border-radius: 18px;
+  }
+
+  .dateBadge {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border-right: none;
+    border-bottom: 1px solid #1e293b;
+    min-width: auto;
+  }
+
+  .dateNum { font-size: 1.3rem; }
+
+  .memberSection {
+    border-right: none;
+    border-bottom: 1px solid #1e293b;
+    padding: 14px 16px;
+  }
+
+  .mySection {
+    width: auto;
+    padding: 14px 16px;
+  }
+
+  .pageHeaderInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}

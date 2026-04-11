@@ -10,7 +10,7 @@ import styles from './raid.module.css';
 const DAYS_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 const YOZ_CLASSES = ['도화가', '기상술사', '환수사'];
 
-type ParticipantData = { name: string; image: string; characterClassName?: string; memo: string };
+type ParticipantData = { name: string; image: string; characterClassName?: string; memo: string; status?: string };
 type ScheduleMap = { [dateKey: string]: { [userId: string]: ParticipantData } };
 
 export default function RaidPage() {
@@ -64,13 +64,14 @@ export default function RaidPage() {
       openModal({ title: '로그인 필요', message: '로그인이 필요한 서비스입니다.\n로그인 후 다시 시도해주세요.', type: 'warning' });
       return;
     }
-    const isChecked = schedules[dateKey]?.[currentUser.id] !== undefined;
+    const mySchedule = schedules[dateKey]?.[currentUser.id];
+    const isChecked = !!mySchedule && mySchedule.status !== 'busy';
     const dayRef = ref(db, `schedules/${dateKey}/${currentUser.id}`);
     try {
       if (isChecked) {
         await remove(dayRef);
       } else {
-        await set(dayRef, { name: currentUser.mainCharacter, image: currentUser.image, characterClassName: currentUser.characterClassName || '', memo: '' });
+        await set(dayRef, { name: currentUser.mainCharacter, image: currentUser.image, characterClassName: currentUser.characterClassName || '', memo: '', status: 'available' });
       }
     } catch (error) {
       console.error(error);
@@ -88,8 +89,9 @@ export default function RaidPage() {
     if (!currentUser) return;
     const dayRef = ref(db, `schedules/${dateKey}/${currentUser.id}`);
     try {
-      if (schedules[dateKey]?.[currentUser.id]) {
-        await set(dayRef, { name: currentUser.mainCharacter, image: currentUser.image, characterClassName: currentUser.characterClassName || '', memo: localMemo });
+      const mySchedule = schedules[dateKey]?.[currentUser.id];
+      if (mySchedule) {
+        await set(dayRef, { ...mySchedule, name: currentUser.mainCharacter, image: currentUser.image, characterClassName: currentUser.characterClassName || '', memo: localMemo });
       }
     } catch (error) {
       console.error(error);
@@ -126,10 +128,10 @@ export default function RaidPage() {
                   const dateKey = getDateKey(day);
                   const daySchedules = schedules[dateKey] || {};
                   const mySchedule = currentUser ? daySchedules[currentUser.id] : null;
-                  const isChecked = !!mySchedule;
+                  const isChecked = !!mySchedule && mySchedule.status !== 'busy';
                   const myMemo = mySchedule?.memo || '';
                   const otherParticipants = Object.entries(daySchedules)
-                    .filter(([userId]) => !currentUser || userId !== currentUser.id)
+                    .filter(([userId, data]) => (!currentUser || userId !== currentUser.id) && data.status !== 'busy')
                     .map(([, data]) => data);
                   const isToday = getDateKey(new Date()) === dateKey;
                   const isPast = day.getTime() < new Date().setHours(0, 0, 0, 0);

@@ -4,7 +4,7 @@
   background: var(--bg-dark);
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
 }
 
 .inner {
@@ -17,43 +17,68 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
-  gap: 32px;
+  height: 60px;
 }
 
+/* ── 왼쪽: 햄버거 + 데스크톱 nav ── */
 .left {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 8px;
   height: 100%;
 }
 
-.logo {
-  font-weight: 900;
-  font-size: 20px;
-  color: var(--text-white);
-  text-decoration: none;
-  letter-spacing: -0.05em;
-}
-
-.nav {
+/* ── 햄버거 버튼 ── */
+.hamburger {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.hamburger:hover { background: rgba(255,255,255,0.08); }
+
+.bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-white);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+.barTop  { transform: translateY(7px) rotate(45deg); }
+.barMid  { opacity: 0; transform: scaleX(0); }
+.barBot  { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── 데스크톱 nav ── */
+.nav {
+  display: none;
+  gap: 4px;
   height: 100%;
   align-items: center;
 }
 
 .navLink {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   height: 100%;
   display: flex;
   align-items: center;
   border-bottom: 2px solid transparent;
-  padding: 0 4px;
+  padding: 0 12px;
   text-decoration: none;
   color: var(--text-muted);
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .navLink:hover { color: var(--text-white); }
 .navLinkActive {
@@ -61,28 +86,48 @@
   color: var(--text-white);
 }
 
+.navLinkDisabled {
+  font-size: 14px;
+  font-weight: 600;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: var(--text-faintest, #3a3f4a);
+  cursor: not-allowed;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ── 오른쪽 ── */
 .right {
   display: flex;
   align-items: center;
 }
 
-.userSection {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+/* ── 유저 드롭다운 ── */
+.userDropWrap {
+  position: relative;
 }
 
-.userInfo {
+.userTrigger {
   display: flex;
   align-items: center;
   gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 8px;
+  transition: background 0.15s;
 }
+.userTrigger:hover { background: rgba(255,255,255,0.07); }
 
 .avatarWrap {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  border: 1px solid var(--gold);
+  border: 1.5px solid var(--gold);
   overflow: hidden;
   flex-shrink: 0;
   background: #222;
@@ -94,59 +139,216 @@
 }
 
 .userName {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-white);
-  display: none;
+  white-space: nowrap;
 }
 
-.userNameSub {
-  color: var(--text-muted);
-  font-weight: 400;
-  margin-left: 2px;
+.chevron {
+  color: var(--text-faint);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.chevronUp { transform: rotate(180deg); }
+
+/* 드롭다운 패널 */
+.userDrop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  background: #1e2128;
+  border: 1px solid #2e3140;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  z-index: 200;
 }
 
-.actions {
+.dropItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  border-left: 1px solid var(--border-sub);
-  padding-left: 16px;
-}
-
-.btnLogout,
-.btnDelete {
-  font-size: 12px;
-  font-weight: 700;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--text-faint);
-  transition: color 0.2s;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  text-align: left;
 }
-.btnLogout:hover { color: var(--text-white); }
-.btnDelete:hover { color: var(--red); }
+.dropItem:hover { background: rgba(255,255,255,0.07); color: var(--text-white); }
 
+.dropItemDanger { color: var(--red); }
+.dropItemDanger:hover { background: rgba(255,94,94,0.1); color: var(--red); }
+
+.dropDivider {
+  height: 1px;
+  background: var(--border-main);
+  margin: 4px 0;
+}
+
+/* ── 로그인 버튼 ── */
 .btnLogin {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #d1d5db;
   text-decoration: none;
   background: #222;
   border: 1px solid var(--border-sub);
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
 }
-.btnLogin:hover {
-  background: var(--border-sub);
+.btnLogin:hover { background: var(--border-sub); color: var(--text-white); }
+
+/* ── 오버레이 ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 101;
+  backdrop-filter: blur(2px);
+}
+
+/* ── 드로어 ── */
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100dvh;
+  background: #16181e;
+  border-right: 1px solid var(--border-main);
+  z-index: 102;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.drawerOpen { transform: translateX(0); }
+
+.drawerUser {
+  padding: 24px 16px 16px;
+  border-bottom: 1px solid var(--border-main);
+}
+
+.drawerUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.15s;
+  margin: -10px;
+}
+.drawerUserInfo:hover { background: rgba(255,255,255,0.06); }
+
+.drawerAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #222;
+}
+
+.drawerCharName {
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text-white);
 }
 
-@media (min-width: 640px) {
-  .inner { padding: 0 24px; }
-  .userName { display: block; }
+.drawerCharSub {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 2px;
 }
+
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.drawerNavLink {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 13px 12px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.drawerNavLink:hover { background: rgba(255,255,255,0.06); color: var(--text-white); }
+.drawerNavLinkActive { color: var(--text-white); background: rgba(255,255,255,0.06); }
+
+.drawerNavLinkDisabled {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-faintest, #3a3f4a);
+  padding: 13px 12px;
+  border-radius: 8px;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.drawerActions {
+  margin-top: auto;
+  padding: 16px 16px 32px;
+  border-top: 1px solid var(--border-main);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drawerBtn {
+  width: 100%;
+  padding: 11px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-sub);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.drawerBtn:hover { background: rgba(255,255,255,0.1); color: var(--text-white); }
+
+.drawerBtnDanger {
+  width: 100%;
+  padding: 11px;
+  background: rgba(255,94,94,0.08);
+  border: 1px solid rgba(255,94,94,0.25);
+  border-radius: 8px;
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.drawerBtnDanger:hover { background: rgba(255,94,94,0.15); }
+
+/* ── 768px 이상: 데스크톱 nav 표시 ── */
+@media (min-width: 768px) {
+  .inner { padding: 0 24px; }
+  .row { height: 64px; }
+  .hamburger { display: none; }   /* PC에서 햄버거 숨김 */
+  .nav { display: flex; }
+  .left { gap: 16px; }
+}
+
 @media (min-width: 1024px) {
   .inner { padding: 0 32px; }
 }
