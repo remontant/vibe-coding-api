@@ -66,7 +66,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: '홈', path: '/' },
-    { name: '레이드 약속', path: '/raid', disabled: true },
+    { name: '레이드 약속', path: '/raid' },
     { name: '스케쥴 체크', path: '/schedule' },
     { name: '숙제', path: '/homework' },
   ];

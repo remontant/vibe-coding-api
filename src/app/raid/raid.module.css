@@ -1,375 +1,516 @@
 .main {
   min-height: 100vh;
-  padding: 32px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: #0e1018;
+  color: #e2e8f0;
+  padding-bottom: 100px;
 }
 
-.inner {
-  width: 100%;
-  max-width: 1024px;
+/* ── 헤더 ─────────────────────────────── */
+.header {
+  padding: 28px 20px 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.hero {
-  margin-bottom: 40px;
-  text-align: center;
+.headerLabel {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 600;
+  margin: 0 0 4px;
 }
 
-.title {
-  font-size: 30px;
+.headerTitle {
+  font-size: 1.9rem;
   font-weight: 900;
-  color: var(--text-white);
-  margin-bottom: 12px;
-  letter-spacing: -0.02em;
+  color: #f1f5f9;
+  margin: 0;
+  letter-spacing: -0.03em;
 }
 
-.desc { color: var(--text-muted); }
-
-/* ── 주간 그리드 ── */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-  width: 100%;
-}
-
-/* ── 주 카드 ── */
-.weekCard {
-  background: var(--bg-dark);
-  border: 1px solid var(--border-main);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+/* ── 본문 ─────────────────────────────── */
+.body {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
-.weekHeader {
-  background: var(--bg-banner);
-  padding: 16px 24px;
-  border-bottom: 1px solid var(--border-main);
+/* ── 주 탭 ────────────────────────────── */
+.weekTabs {
+  display: flex;
+  gap: 4px;
+  background: #171a24;
+  border-radius: 18px;
+  padding: 6px;
+}
+
+.weekTab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 14px 8px;
+  border-radius: 13px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.weekTabOn {
+  background: #6c5ce7;
+  box-shadow: 0 4px 16px rgba(108, 92, 231, 0.3);
+}
+
+.weekTabName {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.weekTabOn .weekTabName {
+  color: #fff;
+}
+
+.weekTabRange {
+  font-size: 0.7rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.weekTabOn .weekTabRange {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── BEST 카드 ────────────────────────── */
+.bestCard {
+  background: #171a24;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  padding: 20px 22px 22px;
+}
+
+.bestRow1 {
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.bestBadge {
+  background: #6c5ce7;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.1em;
+}
+
+.bestDesc {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.bestRow2 {
+  display: flex;
+  align-items: flex-end;
   justify-content: space-between;
 }
 
-.weekTitle {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--gold);
-}
-
-.weekRange {
-  font-size: 12px;
-  color: var(--text-faint);
-  font-weight: 500;
-  background: var(--bg-dark);
-  padding: 6px 12px;
-  border-radius: 9999px;
-  border: 1px solid #222;
-}
-
-.dayList {
-  padding: 16px;
+.bestDateGroup {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: baseline;
+  gap: 8px;
 }
 
-/* ── 날짜 행 ── */
-.dayRow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  border-radius: 12px;
-  border: 2px solid var(--border-main);
-  background: var(--bg-input);
-  transition: transform 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
+.bestDayFull {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 600;
 }
 
-.dayRowClickable { cursor: pointer; }
-.dayRowClickable:hover { transform: translateY(-2px); }
-
-.dayRowDisabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-  filter: grayscale(1);
-}
-
-.dayRowChecked {
-  background: rgba(212, 175, 55, 0.1);
-  border-color: var(--gold);
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
-}
-
-/* ── 날짜 컬럼 ── */
-.dateCol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 50px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--border-sub);
-  padding-right: 16px;
-  margin-right: 16px;
-}
-
-.dayName {
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  color: var(--text-muted);
-}
-.dayNameSun { color: #f87171; }
-.dayNameSat { color: #60a5fa; }
-
-.dateNum {
-  font-size: 28px;
+.bestDateNum {
+  font-size: 2.6rem;
   font-weight: 900;
-  color: var(--text-white);
-  letter-spacing: -0.02em;
-}
-.dateNumToday { color: var(--red); }
-
-/* ── 참가자 영역 ── */
-.participants {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  gap: 8px;
-  min-height: 40px;
+  color: #f1f5f9;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
-.participantRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.participantNameTag {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-  background: var(--bg-dark);
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1px solid var(--border-sub);
-  width: 100px;
-}
-
-.participantAvatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid var(--border-light);
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #222;
-}
-.participantAvatarMine {
-  border-color: var(--gold);
-}
-
-.avatarImg { width: 100%; height: 100%; }
-
-.participantName {
-  font-size: 11px;
+.bestTime {
+  font-size: 1.05rem;
+  color: #818cf8;
   font-weight: 700;
-  color: var(--text-muted);
-  display: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding-bottom: 4px;
 }
-.participantNameMine { color: #e5e7eb; }
 
-.participantMemo {
-  flex: 1;
+/* ── 섹션 헤더 ────────────────────────── */
+.secRow {
   display: flex;
   align-items: center;
-  background: var(--bg-dark);
-  border: 1px solid var(--border-sub);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 12px;
-  color: var(--text-muted);
-  min-width: 50px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  height: 34px;
+  justify-content: space-between;
+  padding: 0 2px;
 }
 
-/* 내 참여 행 */
-.myRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  transition: opacity 0.3s, transform 0.3s;
+.secLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #94a3b8;
 }
 
-.myRowHidden {
-  opacity: 0;
-  transform: translateX(-16px);
-  pointer-events: none;
-  display: none;
-}
-
-/* 메모 입력 */
-.memoInputWrap {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-width: 50px;
-}
-
-.memoInput {
-  width: 100%;
-  background: var(--bg-dark);
-  border: 1px solid var(--gold);
-  border-radius: 8px;
-  padding: 8px 32px 8px 12px;
-  font-size: 12px;
-  color: var(--text-white);
-  outline: none;
-  height: 34px;
-}
-.memoInput::placeholder { color: var(--text-faintest); }
-
-.memoSaveBtn {
-  position: absolute;
-  right: 8px;
-  color: var(--gold);
+.expandAllBtn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 2px;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.expandAllBtn:hover {
+  color: #f1f5f9;
+}
+
+/* ── 날짜 목록 ────────────────────────── */
+.dayList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── 날짜 카드 ────────────────────────── */
+.dayCard {
+  background: #171a24;
+  border: 1px solid #1e293b;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.dayCardOpen {
+  border-color: rgba(108, 92, 231, 0.5);
+}
+
+.dayCardPast {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── 날짜 행 버튼 ─────────────────────── */
+.dayRow {
   display: flex;
   align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
 }
-.memoSaveBtn:hover { color: var(--text-white); }
-.memoSaveBtn svg { width: 16px; height: 16px; }
 
-/* 메모 표시 */
-.memoDisplay {
+.dayDatePart {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 42px;
+  flex-shrink: 0;
+}
+
+.dayAbbr {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sun { color: #ef4444 !important; }
+.sat { color: #3b82f6 !important; }
+
+.dayDateNum {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #f1f5f9;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+/* ── 멤버 닷 영역 ─────────────────────── */
+.dayDots {
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: var(--bg-dark);
-  border: 1px solid var(--border-sub);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: border-color 0.2s;
-  min-width: 50px;
-  height: 34px;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
 }
-.memoDisplay:hover { border-color: #555; }
 
-.memoText {
+.memberChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 5px;
+  border-radius: 999px;
+  border: 1.5px solid #1e293b;
+  background: transparent;
+}
+
+.memberChipOn {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.memberChipDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  flex-shrink: 0;
+}
+
+.memberChipName {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+/* ── 모두 가능 인라인 ─────────────────── */
+.allGo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #a5b4fc;
+}
+
+.allGoTime {
+  font-size: 0.85rem;
+  color: #818cf8;
+  font-weight: 800;
+}
+
+/* ── 화살표 ───────────────────────────── */
+.chevron {
+  color: #475569;
+  flex-shrink: 0;
+  display: flex;
+}
+
+/* ── 시간 패널 ────────────────────────── */
+.timePanel {
+  border-top: 1px solid #1e293b;
+  padding: 12px 0 16px;
+}
+
+/* 이름 열 + 스크롤 영역을 나란히 */
+.tpGrid {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ── 고정 이름 열 (스크롤 밖) ──────────── */
+.tpNamesCol {
+  flex-shrink: 0;
+  width: 80px;
+  padding-left: 16px;
+}
+
+/* 헤더 높이 맞춤 (tpHoursHeader와 동일) */
+.tpNameSpacer {
+  height: 30px;
+  margin-bottom: 8px;
+}
+
+.tpNameRow {
+  height: 30px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 8px;
+}
+
+.tpDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tpNameText {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ── 가로 스크롤 영역 ─────────────────── */
+.tpScrollArea {
+  flex: 1;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 16px;
+}
+
+.tpScrollArea::-webkit-scrollbar {
+  height: 3px;
+}
+.tpScrollArea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tpScrollArea::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 999px;
+}
+
+/* 시간 레이블 헤더 */
+.tpHoursHeader {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin-bottom: 8px;
+  min-width: max-content;
+}
+
+/* 시간 레이블 — tpCell과 너비·마진 동일 */
+.tpHourLabel {
+  width: 34px;
+  min-width: 34px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #475569;
+  margin: 0 2px;
+}
+
+/* 03-12 통합 헤더 */
+.tpMergedLabel {
+  width: 56px;
+  min-width: 56px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: #334155;
+  border-left: 1px dashed #1e293b;
+  margin-left: 4px;
+  padding-left: 4px;
+}
+
+/* ── 셀 행 ────────────────────────────── */
+.tpCellsRow {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin-bottom: 6px;
+  min-width: max-content;
+}
+
+/* ── 시간 셀 ──────────────────────────── */
+.tpCell {
+  width: 34px;
+  min-width: 34px;
+  flex-shrink: 0;
+  height: 26px;
+  border-radius: 6px;
+  border: 1.5px solid #1e293b;
+  background: #0e1018;
+  cursor: default;
+  margin: 0 2px;
+  transition: background 0.12s, border-color 0.12s;
+  padding: 0;
+}
+
+.tpCellsRowMe .tpCell {
+  cursor: pointer;
+}
+
+.tpCellsRowMe .tpCell:hover:not(:disabled) {
+  border-color: #334155;
+  background: #1e293b;
+}
+
+.tpCell:disabled {
+  cursor: default;
+}
+
+.tpCellOn {
+  /* background/border set via inline style */
+}
+
+/* 03-12 통합 셀 (멤버 행) */
+.tpCellMerged {
+  width: 56px;
+  min-width: 56px;
+  flex-shrink: 0;
+  height: 26px;
+  border-radius: 6px;
+  background: repeating-linear-gradient(
+    135deg,
+    #1e293b 0px,
+    #1e293b 2px,
+    #0e1018 2px,
+    #0e1018 7px
+  );
+  border: 1.5px dashed #253040;
+  margin-left: 4px;
+}
+
+/* ── 하단 힌트 + 버튼 ─────────────────── */
+.tpFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 16px;
+}
+
+.tpHint {
+  font-size: 0.68rem;
+  color: #475569;
+}
+
+.allDayBtn {
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1.5px solid #334155;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
   white-space: nowrap;
-  color: var(--text-white);
-}
-.memoPlaceholder { color: var(--text-faintest); }
-
-.memoEditIcon {
-  width: 14px;
-  height: 14px;
-  color: var(--text-faint);
-  flex-shrink: 0;
-  margin-left: 8px;
-  transition: color 0.2s;
-}
-.memoDisplay:hover .memoEditIcon { color: var(--gold); }
-
-/* 빈 상태 텍스트 */
-.emptyText {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-faintest);
-  display: flex;
-  align-items: center;
-  height: 100%;
 }
 
-/* ── 체크박스 ── */
-.checkbox {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  border: 2px solid #6b7280;
-  background: var(--bg-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.2s, background 0.2s;
-  margin-left: 16px;
-  flex-shrink: 0;
+.allDayBtn:hover {
+  border-color: #6c5ce7;
+  color: #a5b4fc;
 }
 
-.checkboxChecked {
-  border-color: var(--gold);
-  background: var(--gold);
-  color: #000;
+.allDayBtnOn {
+  background: rgba(108, 92, 231, 0.15);
+  border-color: #6c5ce7;
+  color: #a5b4fc;
 }
 
-.checkbox svg { width: 12px; height: 12px; }
-
-/* ── TODAY 뱃지 ── */
-.todayBadge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(25%, -33%);
-  background: var(--red);
-  color: var(--text-white);
-  font-size: 9px;
-  font-weight: 900;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  z-index: 10;
-  animation: bounce 1s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translate(25%, -33%) translateY(0); }
-  50% { transform: translate(25%, -33%) translateY(-4px); }
-}
-
-@media (min-width: 640px) {
-  .participantAvatar { width: 28px; height: 28px; }
-  .participantNameTag { padding: 6px 10px; width: 120px; }
-  .participantName { display: block; }
-  .participantMemo { font-size: 14px; height: 38px; }
-  .memoInput { font-size: 14px; height: 38px; }
-  .memoDisplay { font-size: 14px; height: 38px; }
-  .checkbox { width: 24px; height: 24px; }
-  .checkbox svg { width: 16px; height: 16px; }
-  .dateCol { min-width: 60px; }
-  .dateNum { font-size: 30px; }
-  .todayBadge { font-size: 10px; transform: translate(33%, -33%); }
-  .dayList { padding: 24px; }
-}
-
-@media (min-width: 1024px) {
-  .grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (min-width: 768px) {
-  .main { padding: 96px; }
-  .title { font-size: 36px; }
+/* ── 반응형 ───────────────────────────── */
+@media (max-width: 480px) {
+  .headerTitle { font-size: 1.65rem; }
+  .bestDateNum { font-size: 2.1rem; }
+  .bestTime { font-size: 0.9rem; }
+  .dayRow { padding: 14px; }
 }
