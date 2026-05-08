@@ -64,7 +64,7 @@ export default function Navbar() {
     });
   };
 
-  const navItems = [
+  const navItems: { name: string; path: string; disabled?: boolean }[] = [
     { name: '홈', path: '/' },
     { name: '레이드 약속', path: '/raid' },
     { name: '스케쥴 체크', path: '/schedule' },
